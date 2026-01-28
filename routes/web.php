@@ -5,7 +5,9 @@ use App\Http\Controllers\SkillController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+//Publik
+Route::get('/', [HomeController::class, 'index']);
+
 
 // dashboard default Breeze (boleh dipakai / nanti bisa dihapus)
 Route::get('/dashboard', function () {

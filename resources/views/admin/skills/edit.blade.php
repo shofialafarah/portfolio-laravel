@@ -9,6 +9,12 @@
         @csrf
         @method('PUT')
 
+        <select name="category" class="form-select" required>
+            <option value="design" {{ $skill->category == 'design' ? 'selected' : '' }}>Design</option>
+            <option value="web" {{ $skill->category == 'web' ? 'selected' : '' }}>Web Development</option>
+            <option value="office" {{ $skill->category == 'office' ? 'selected' : '' }}>Microsoft / Administrasi</option>
+        </select>
+
         <div class="mb-3">
             <label for="name" class="form-label">Nama Skill</label>
             <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $skill->name) }}"

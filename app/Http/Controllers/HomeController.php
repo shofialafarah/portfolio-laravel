@@ -9,8 +9,10 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $skills = Skill::all();
-
-        return view('home', compact('skills'));
+        return view('home', [
+            'designSkills' => Skill::where('category', 'design')->get(),
+            'webSkills'    => Skill::where('category', 'web')->get(),
+            'officeSkills' => Skill::where('category', 'office')->get(),
+        ]);
     }
 }

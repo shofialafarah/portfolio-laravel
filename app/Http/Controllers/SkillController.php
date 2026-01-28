@@ -32,6 +32,7 @@ class SkillController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255|unique:skills,name',
+            'category' => 'required|in:design,web,office',
             'icon' => 'required|image|mimes:png,jpg,jpeg,svg|max:2048',
         ]);
 
@@ -81,6 +82,7 @@ class SkillController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255|unique:skills,name,' . $skill->id,
+            'category' => 'required|in:design,web,office',
             'icon' => 'nullable|image|mimes:png,jpg,jpeg,svg|max:2048'
         ]);
 
