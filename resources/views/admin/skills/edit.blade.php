@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
-@section('title', 'Edit Skill')
+@section('title', 'Halaman Admin')
 
 @section('content')
     <h2>Edit Skill</h2>

@@ -11,12 +11,22 @@
             {{-- KIRI --}}
             <div class="animate-fade-in-left">
                 <h1 class="text-4xl md:text-5xl font-bold mb-4">
-                    Halo, saya <span class="text-indigo-400">Shofia</span> 👋
+                    Halo, saya <span class="text-indigo-400">{{ $profile->name }}</span>
                 </h1>
 
-                <h2 class="text-xl md:text-2xl text-indigo-300 font-semibold mb-6">
-                    Web Developer | Graphic Designer | Fashion Designer
+                {{-- <h2 class="text-xl md:text-2xl text-indigo-300 font-semibold mb-6">
+                    {{ $profile->headline }}
+                </h2> --}}
+                {{-- <h2 class="text-xl md:text-2xl font-semibold mb-6">
+                    <span class="text-indigo-300" id="typing-text"></span>
+                    <span class="cursor">|</span>
+                </h2> --}}
+                <h2 class="text-xl md:text-2xl  font-semibold mb-6">
+                    <span class="text-indigo-300" id="typing-text"></span><span class="typing-cursor text-white">|</span>
                 </h2>
+
+
+
 
                 <p class="text-gray-300 leading-relaxed mb-8">
                     Saya fresh graduate dari
@@ -57,11 +67,16 @@
 
             {{-- KANAN --}}
             <div class="flex justify-center md:justify-end animate-fade-in-right">
+                @php
+                    $photo = $profile->photo ? asset('storage/' . $profile->photo) : asset('images/profil.jpg');
+                @endphp
+
                 <div class="relative">
                     <div class="absolute inset-0 bg-indigo-600 rounded-full blur-2xl opacity-30"></div>
-                    <img src="{{ asset('images/foto-profil.jpg') }}"
-                        class="relative w-72 h-72 rounded-full border-4 border-indigo-500 shadow-xl">
+                    <img src="{{ $photo }}" alt="Foto Profil"
+                        class="relative w-72 h-72 rounded-full border-4 border-indigo-500 shadow-xl object-cover">
                 </div>
+
             </div>
 
         </div>
@@ -120,5 +135,96 @@
 
         </div>
     </section>
+
+    {{-- ================= PROJEK & SERTIFIKAT ================= --}}
+    <div class="flex gap-4 mb-8 justify-center">
+        <button class="filter-btn active">Web</button>
+        <button class="filter-btn active">Design</button>
+        <button class="filter-btn active">Art</button>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="blackdrop-blur-xl bg-white/10 rounded-xl overflow-hidden hover:scale-105 transition">
+            <img src="/images/project-1.png" class="w-full h-48 object-cover" alt="Projek 1">
+            <div class="p-4">
+                <h3 class="font-semibold text-lg">Company Profile</h3>
+                <p class="text-sm text-gray-300 mt-2">
+                    Website perusahaan fashion menggunakan Laravel
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <section id="projects" class="max-w-7xl mx-auto px-6 py-24">
+        <h2 class="text-3xl font-bold text-center mb-12">Projects</h2>
+
+        <div class="flex justify-center gap-4 mb-10">
+            <button class="filter-btn" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="web">Web</button>
+            <button class="filter-btn" data-filter="design">Design</button>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            @foreach ($projects as $project)
+                <div class="project-card {{ $project->category }}">
+                    <img src="{{ asset('storage/' . $project->image) }}" class="w-full h-48 object-cover rounded-lg">
+                    <h3 class="mt-3 font-semibold">{{ $project->title }}</h3>
+                    <p class="text-sm text-gray-400">{{ $project->description }}</p>
+                </div>
+            @endforeach
+        </div>
+    </section>
+
+
+@endsection
+
+@section('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const texts = @json($headlines);
+
+            if (!texts.length) return;
+
+            let index = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            const el = document.getElementById('typing-text');
+
+            function typeEffect() {
+                const current = texts[index];
+
+                el.textContent = isDeleting ?
+                    current.substring(0, charIndex--) :
+                    current.substring(0, charIndex++);
+
+                if (!isDeleting && charIndex === current.length) {
+                    setTimeout(() => isDeleting = true, 1200);
+                }
+
+                if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    index = (index + 1) % texts.length;
+                }
+
+                setTimeout(typeEffect, isDeleting ? 60 : 100);
+            }
+
+            typeEffect();
+        });
+    </script>
+    <script>
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const filter = btn.dataset.filter;
+
+                document.querySelectorAll('.project-card').forEach(card => {
+                    card.style.display =
+                        filter === 'all' || card.classList.contains(filter) ?
+                        'block' :
+                        'none';
+                });
+            });
+        });
+    </script>
 
 @endsection

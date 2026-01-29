@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
-@section('title', 'Dashboard')
+@section('title', 'Halaman Admin')
 
 @section('content')
     <h1 class="mb-3">Dashboard</h1>

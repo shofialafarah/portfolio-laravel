@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SkillController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\HeadlineController;
+use App\Http\Controllers\Admin\ProjectController;
 
 //Publik
 Route::get('/', [HomeController::class, 'index']);
@@ -31,7 +33,32 @@ Route::middleware(['auth'])
             return view('admin.dashboard');
         })->name('dashboard');
 
+        Route::get('/profile', [\App\Http\Controllers\Admin\ProfileController::class, 'edit'])
+            ->name('profile.edit');
+
+        Route::post('/profile', [\App\Http\Controllers\Admin\ProfileController::class, 'update'])
+            ->name('profile.update');
+
+        Route::get('/headlines', [\App\Http\Controllers\Admin\HeadlineController::class, 'index'])
+            ->name('headlines.index');
+
+        Route::post('/headlines', [\App\Http\Controllers\Admin\HeadlineController::class, 'store'])
+            ->name('headlines.store');
+
+        Route::put('/headlines/{headline}', [\App\Http\Controllers\Admin\HeadlineController::class, 'update'])
+            ->name('headlines.update');
+
+        Route::delete('/headlines/{headline}', [\App\Http\Controllers\Admin\HeadlineController::class, 'destroy'])
+            ->name('headlines.destroy');
+
+        Route::post('/headlines/reorder',
+            [HeadlineController::class, 'reorder']
+        )->name('headlines.reorder');
+
         Route::resource('skills', SkillController::class);
+
+        Route::resource('projects', \App\Http\Controllers\Admin\ProjectController::class)->middleware('auth');
+
     });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -1,8 +1,18 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
-@section('title', 'Tambah Skill')
+@section('title', 'Halaman Admin')
 
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form action="{{ route('admin.skills.store') }}" method="post" enctype="multipart/form-data"
         class="p-3 border rounded max-w-md mx-auto bg-white">
         @csrf

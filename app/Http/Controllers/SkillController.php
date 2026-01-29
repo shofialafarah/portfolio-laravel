@@ -11,11 +11,25 @@ class SkillController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $skills = Skill::all(); // untuk mengambil semua data skills
+        $query = Skill::query();
+
+        if ($request->search) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        $skills = $query->get();
+
+        // JIKA AJAX → BALIKIN PARTIAL
+        if ($request->ajax()) {
+            return view('admin.skills.partials.skill-cards', compact('skills'))->render();
+        }
+
+        // JIKA NORMAL LOAD
         return view('admin.skills.index', compact('skills'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -48,6 +62,7 @@ class SkillController extends Controller
 
         Skill::create([
             'name' => $request->name,
+            'category' => $request->category,
             'icon' => $path,
         ]);
 
@@ -87,6 +102,7 @@ class SkillController extends Controller
         ]);
 
         $skill->name = $request->input('name');
+        $skill->category = $request->category;
 
         if ($request->hasFile('icon')) {
             //Hapus file lama
