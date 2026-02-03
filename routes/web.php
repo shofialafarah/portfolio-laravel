@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\CertificationController;
 | PUBLIC
 |--------------------------------------------------------------------------
 */
+
 Route::get('/', [HomeController::class, 'index']);
 
 
@@ -67,4 +68,4 @@ Route::middleware('auth')
         Route::resource('certifications', CertificationController::class);
     });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -1,10 +1,9 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="container py-5">
-    <div class="max-w-2xl mx-auto rounded-xl shadow p-6">
-
-        <h1 class="text-2xl font-bold mb-6">Tambah Sertifikat</h1>
+<div class="container py-4">
+        <div class="flex justify-between items-center mb-4">
+            <h1 class="text-2xl font-bold">Tambah Sertifikat</h1>
 
         <form action="{{ route('admin.certifications.store') }}" method="POST" enctype="multipart/form-data">
 

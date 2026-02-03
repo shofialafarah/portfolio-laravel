@@ -1,10 +1,9 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="container py-5">
-        <div class="max-w-2xl mx-auto rounded-xl p-6">
-
-            <h1 class="text-2xl font-bold mb-6">Edit Sertifikat</h1>
+    <div class="container py-4">
+        <div class="flex justify-between items-center mb-4">
+            <h1 class="text-2xl font-bold">Edit Sertifikat</h1>
 
             <form action="{{ route('admin.certifications.update', $certification) }}" method="POST"
                 enctype="multipart/form-data">
@@ -37,7 +36,7 @@
                     <label class="form-label fw-semibold">Sertifikat Saat Ini</label>
 
                     <div class="border rounded-lg p-2 bg-gray-100 flex justify-center">
-                        <div class="w-[180px] h-[240px] bg-white flex items-center justify-center overflow-hidden rounded">
+                        <div class="w-[100px] h-[200px] bg-white flex items-center justify-center overflow-hidden rounded">
                             <img src="{{ asset('storage/' . $certification->image) }}"
                                 class="max-w-full max-h-full object-contain" alt="Preview Sertifikat">
                         </div>

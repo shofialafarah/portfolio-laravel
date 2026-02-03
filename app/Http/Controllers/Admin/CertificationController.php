@@ -93,7 +93,7 @@ class CertificationController extends Controller
 
         return redirect()
             ->route('admin.certifications.index')
-            ->with('success', 'Sertifikat berhasil diupdate');
+            ->with('success', 'Sertifikat berhasil diperbarui');
     }
 
     public function destroy(Certification $certification)

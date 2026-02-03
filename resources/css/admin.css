@@ -8,10 +8,11 @@ body {
 /* SIDEBAR */
 .admin-sidebar {
     margin: 20px;
-    width: 260px;
+    width: 200px;
 }
 
 .sidebar-glass {
+    position: sticky;
     height: calc(100vh - 40px);
     padding: 20px;
     border-radius: 24px;
