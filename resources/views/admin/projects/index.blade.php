@@ -1,7 +1,5 @@
 @extends('layouts.admin')
 
-@section('title', 'Projects')
-
 @section('content')
     <div class="container py-4">
 

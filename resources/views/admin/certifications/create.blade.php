@@ -9,34 +9,34 @@
 
             @csrf
 
-            {{-- TITLE --}}
+            {{-- Judul --}}
             <div class="mb-4">
-                <label class="form-label fw-semibold">Judul Sertifikat</label>
+                <label class="form-label fw-semibold">Judul Sertifikat <span class="text-danger">*</span></label>
                 <input type="text" name="title"
                     class="form-control @error('title') is-invalid @enderror"
-                    value="{{ old('title') }}" required>
-                @error('title') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    value="{{ old('title') }}" placeholder="Input judul sertifikat" required>
+                @error('title') <div class="invalid-feedback" >{{ $message }}</div> @enderror
             </div>
 
-            {{-- ISSUER --}}
+            {{-- Penyelenggara --}}
             <div class="mb-4">
-                <label class="form-label fw-semibold">Penyelenggara</label>
+                <label class="form-label fw-semibold">Penyelenggara <span class="text-danger">*</span></label>
                 <input type="text" name="issuer"
                     class="form-control"
-                    value="{{ old('issuer') }}">
+                    value="{{ old('issuer') }}" placeholder="Input nama penyelenggara" required>
             </div>
 
-            {{-- YEAR --}}
+            {{-- Tahun --}}
             <div class="mb-4">
-                <label class="form-label fw-semibold">Tahun</label>
+                <label class="form-label fw-semibold">Tahun <span class="text-danger">*</span></label>
                 <input type="number" name="year"
                     class="form-control"
-                    value="{{ old('year') }}" placeholder="2024">
+                    value="{{ old('year') }}" placeholder="Input tahun pembuatan sertifikat" required>
             </div>
 
             {{-- IMAGE --}}
             <div class="mb-4">
-                <label class="form-label fw-semibold">Gambar Sertifikat</label>
+                <label class="form-label fw-semibold">Gambar Sertifikat <span class="text-danger">*</span></label>
                 <input type="file" name="image"
                     class="form-control @error('image') is-invalid @enderror"
                     accept="image/*" required>

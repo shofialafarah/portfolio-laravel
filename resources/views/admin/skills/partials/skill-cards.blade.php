@@ -1,7 +1,7 @@
 <div class="row">
         @foreach ($skills as $skill)
             <div class="col-md-2 mb-4">
-                <div class="card p-3 text-center">
+                <div class="card p-3 text-center bg-dark text-white">
                     <img src="{{ asset('storage/' . $skill->icon) }}" alt="{{ $skill->name }}" class="mx-auto mb-3"
                         style="width: 64px; height: 64px;">
                     <h5 class="card-title">{{ $skill->name }}</h5>

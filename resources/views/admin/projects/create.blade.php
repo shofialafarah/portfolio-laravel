@@ -11,7 +11,7 @@
 
                 {{-- Judul --}}
                 <div class="mb-4">
-                    <label class="form-label fw-semibold">Judul Projek</label>
+                    <label class="form-label fw-semibold">Judul Projek <span class="text-danger">*</span></label>
                     <input type="text" name="title" class="form-control @error('title') is-invalid @enderror"
                         value="{{ old('title') }}" placeholder="Input Judul Projek" required>
                     @error('title')
@@ -21,6 +21,7 @@
 
                 {{-- Kategori --}}
                 <div class="mb-4">
+                    <label class="form-label fw-semibold">Kategori Projek <span class="text-danger">*</span></label>
                     <select name="category" class="form-control">
                         <option value="#" disabled selected>-- Pilih Kategori Projek --</option>
                         <option value="web">Web</option>
@@ -30,7 +31,7 @@
 
                 {{-- Foto Project --}}
                 <div class="mb-4">
-                    <label class="form-label fw-semibold">Foto Project</label>
+                    <label class="form-label fw-semibold">Foto Project <span class="text-danger">*</span></label>
                     <input type="file" name="image" class="form-control @error('image') is-invalid @enderror"
                         accept="image/*" required>
                     <small class="text-muted">Portrait & landscape aman</small>
@@ -41,9 +42,9 @@
 
                 {{-- Deskripsi Projek --}}
                 <div class="mb-4">
-                    <label class="form-label fw-semibold">Deskripsi</label>
+                    <label class="form-label fw-semibold">Deskripsi <span class="text-danger">*</span></label>
                     <input type="text" name="description" class="form-control" value="{{ old('description') }}"
-                        placeholder="Input Deskripsi projek">
+                        placeholder="Input Deskripsi projek" required>
                 </div>
 
                 {{-- ACTION --}}

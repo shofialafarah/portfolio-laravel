@@ -1,7 +1,5 @@
 @extends('layouts.admin')
 
-@section('title', 'Halaman Admin')
-
 @section('content')
 <h1 class="mb-4">Edit Biodata</h1>
 

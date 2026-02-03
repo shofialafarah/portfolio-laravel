@@ -18,7 +18,7 @@
             </div>
         </div>
 
-        <a href="{{ route('admin.skills.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Skill Baru</a>
+        <a href="{{ route('admin.skills.create') }}" class="btn btn-primary mb-4"><i class="fa fa-plus"></i> Tambah Skill Baru</a>
 
         <div id="skill-wrapper">
             @include('admin.skills.partials.skill-cards', ['skills' => $skills])

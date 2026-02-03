@@ -18,7 +18,7 @@
         @csrf
 
         <div class="mb-3">
-            <label class="form-label">Kategori Skill</label>
+            <label class="form-label">Kategori Skill <span class="text-danger">*</span></label>
             <select name="category" class="form-select" required>
                 <option value="">-- Pilih Kategori --</option>
                 <option value="design">Design</option>
@@ -28,13 +28,13 @@
         </div>
 
         <div class="mb-3">
-            <label for="name" class="form-label">Nama Skill</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Nama Skill">
+            <label for="name" class="form-label">Nama Skill <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Nama Skill" required>
         </div>
 
         <div class="mb-3">
-            <label for="icon" class="form-label">Upload Icon</label>
-            <input type="file" class="form-control" id="icon" name="icon">
+            <label for="icon" class="form-label">Upload Icon <span class="text-danger">*</span></label>
+            <input type="file" class="form-control" id="icon" name="icon" required>
         </div>
 
         <button type="submit" class="btn btn-primary">Simpan</button>
