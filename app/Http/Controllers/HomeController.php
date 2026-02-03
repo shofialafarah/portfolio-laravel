@@ -6,6 +6,7 @@ use App\Models\Skill;
 use App\Models\Profile;
 use App\Models\Headline;
 use App\Models\Project;
+use App\Models\Certification;
 
 class HomeController extends Controller
 {
@@ -24,6 +25,11 @@ class HomeController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
+        // certifications
+        $certifications = Certification::where('is_active', 1)
+            ->orderBy('year', 'desc')
+            ->get();
+
 
         // skills publik (dipisah per kategori)
         $designSkills = Skill::where('category', 'design')->get();
@@ -36,7 +42,8 @@ class HomeController extends Controller
             'designSkills',
             'webSkills',
             'officeSkills',
-            'projects'
+            'projects',
+            'certifications'
         ));
     }
 }

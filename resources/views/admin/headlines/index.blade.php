@@ -47,6 +47,11 @@
             </div>
         </li>
     @endforeach
+    @else
+        <div class="alert alert-info text-center">
+            Belum ada sertifikat. Silakan tambah sertifikat baru.
+        </div>
+    @endif
 </ul>
 @endsection
 

@@ -85,93 +85,130 @@
     {{-- ================= SKILLS ================= --}}
     <section id="skills" class="max-w-7xl mx-auto px-6 py-24">
         <h2 class="text-3xl font-bold mb-12 text-center">
-            Skill & Tools
+            Tech Stack & Tools
         </h2>
 
-        <div class="grid md:grid-cols-3 gap-12">
+        <div class="bg-zinc-900/60 backdrop-blur rounded-2xl p-6 md:p-10 shadow-2xl">
+            <div class="grid md:grid-cols-3 gap-12">
+                {{-- DESIGN --}}
+                <div class="bg-zinc-800 rounded-xl p-4 hover:-translate-y-1 transition">
+                    <h3 class="text-xl font-semibold mb-6 text-indigo-400 text-center animate-fade-up">
+                        Design
+                    </h3>
+                    <div class="grid grid-cols-3 gap-6">
+                        @foreach ($designSkills as $index => $skill)
+                            <div class="text-center animate-fade-up hover:scale-110 transition"
+                                style="animation-delay: {{ $index * 0.15 }}s">
+                                <img src="{{ asset('storage/' . $skill->icon) }}" class="h-14 mx-auto mb-2">
+                                <p class="text-sm">{{ $skill->name }}</p>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
 
-            {{-- DESIGN --}}
-            <div>
-                <h3 class="text-xl font-semibold mb-6 text-indigo-400 text-center animate-fade-up">
-                    Design
-                </h3>
+                {{-- WEB --}}
+                <div class="bg-zinc-800 rounded-xl p-4 hover:-translate-y-1 transition">
+                    <h3 class="text-xl font-semibold mb-6 text-indigo-400 text-center">Programming</h3>
+                    <div class="grid grid-cols-3 gap-6">
+                        @foreach ($webSkills as $skill)
+                            <div class="text-center hover:scale-110 transition">
+                                <img src="{{ asset('storage/' . $skill->icon) }}" class="h-14 mx-auto mb-2">
+                                <p class="text-sm">{{ $skill->name }}</p>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
 
-                <div class="grid grid-cols-3 gap-6">
-                    @foreach ($designSkills as $index => $skill)
-                        <div class="text-center animate-fade-up hover:scale-110 transition"
-                            style="animation-delay: {{ $index * 0.15 }}s">
-                            <img src="{{ asset('storage/' . $skill->icon) }}" class="h-14 mx-auto mb-2">
-                            <p class="text-sm">{{ $skill->name }}</p>
-                        </div>
-                    @endforeach
+                {{-- OFFICE --}}
+                <div class="bg-zinc-800 rounded-xl p-4 hover:-translate-y-1 transition">
+                    <h3 class="text-xl font-semibold mb-6 text-indigo-400 text-center">Microsoft & Admin</h3>
+                    <div class="grid grid-cols-3 gap-6">
+                        @foreach ($officeSkills as $skill)
+                            <div class="text-center hover:scale-110 transition">
+                                <img src="{{ asset('storage/' . $skill->icon) }}" class="h-14 mx-auto mb-2">
+                                <p class="text-sm">{{ $skill->name }}</p>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
-
-            {{-- WEB --}}
-            <div>
-                <h3 class="text-xl font-semibold mb-6 text-indigo-400 text-center">Web</h3>
-                <div class="grid grid-cols-3 gap-6">
-                    @foreach ($webSkills as $skill)
-                        <div class="text-center hover:scale-110 transition">
-                            <img src="{{ asset('storage/' . $skill->icon) }}" class="h-14 mx-auto mb-2">
-                            <p class="text-sm">{{ $skill->name }}</p>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-
-            {{-- OFFICE --}}
-            <div>
-                <h3 class="text-xl font-semibold mb-6 text-indigo-400 text-center">Microsoft & Admin</h3>
-                <div class="grid grid-cols-3 gap-6">
-                    @foreach ($officeSkills as $skill)
-                        <div class="text-center hover:scale-110 transition">
-                            <img src="{{ asset('storage/' . $skill->icon) }}" class="h-14 mx-auto mb-2">
-                            <p class="text-sm">{{ $skill->name }}</p>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-
         </div>
     </section>
 
     {{-- ================= PROJEK & SERTIFIKAT ================= --}}
-    <div class="flex gap-4 mb-8 justify-center">
-        <button class="filter-btn active">Web</button>
-        <button class="filter-btn active">Design</button>
-        <button class="filter-btn active">Art</button>
-    </div>
-
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div class="blackdrop-blur-xl bg-white/10 rounded-xl overflow-hidden hover:scale-105 transition">
-            <img src="/images/project-1.png" class="w-full h-48 object-cover" alt="Projek 1">
-            <div class="p-4">
-                <h3 class="font-semibold text-lg">Company Profile</h3>
-                <p class="text-sm text-gray-300 mt-2">
-                    Website perusahaan fashion menggunakan Laravel
-                </p>
-            </div>
-        </div>
-    </div>
-
     <section id="projects" class="max-w-7xl mx-auto px-6 py-24">
         <h2 class="text-3xl font-bold text-center mb-12">Projects</h2>
-
-        <div class="flex justify-center gap-4 mb-10">
-            <button class="filter-btn" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="web">Web</button>
-            <button class="filter-btn" data-filter="design">Design</button>
+        {{-- FILTER --}}
+        <div class="flex justify-center mb-12">
+            <div
+                class="inline-flex gap-3 bg-zinc-900/60 backdrop-blur border border-white/10 rounded-2xl px-4 py-3 shadow-lg">
+                <button class="filter-btn" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="web">Web</button>
+                <button class="filter-btn" data-filter="design">Design</button>
+            </div>
         </div>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            @foreach ($projects as $project)
-                <div class="project-card {{ $project->category }}">
-                    <img src="{{ asset('storage/' . $project->image) }}" class="w-full h-48 object-cover rounded-lg">
-                    <h3 class="mt-3 font-semibold">{{ $project->title }}</h3>
-                    <p class="text-sm text-gray-400">{{ $project->description }}</p>
-                </div>
-            @endforeach
+        <div class="bg-zinc-900/60 backdrop-blur rounded-2xl p-6 md:p-10 shadow-2xl">
+            <!-- GRID PROJECT -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                @foreach ($projects as $project)
+                    <div
+                        class="project-card {{ $project->category }} bg-zinc-800 rounded-xl p-4 hover:-translate-y-1 transition">
+
+                        {{-- WRAPPER GAMBAR (DINAMIS) --}}
+                        <div
+                            class="w-full overflow-hidden rounded-lg
+                        {{ $project->category === 'design' ? 'aspect-[4/5]' : 'aspect-video' }}">
+
+                            <img src="{{ asset('storage/' . $project->image) }}" class="w-full h-full object-cover"
+                                alt="{{ $project->title }}">
+                        </div>
+
+                        <h3 class="mt-4 font-semibold text-lg">
+                            {{ $project->title }}
+                        </h3>
+
+                        <p class="text-sm text-gray-400 mt-1">
+                            {{ $project->description }}
+                        </p>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+    {{-- ================= SERTIFIKAT ================= --}}
+    <section id="certifications" class="max-w-7xl mx-auto px-6 py-24">
+        <h2 class="text-3xl font-bold text-center mb-12">
+            Certifications
+        </h2>
+
+        <!-- CARD BESAR -->
+        <div class="bg-zinc-900/60 backdrop-blur rounded-2xl p-6 md:p-10 shadow-2xl">
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                @foreach ($certifications as $cert)
+                    <div class="bg-zinc-800 rounded-xl p-4 hover:-translate-y-1 transition">
+
+                        <!-- FRAME SERTIFIKAT -->
+                        <div
+                            class="w-full aspect-[4/3] bg-zinc-900 rounded-lg 
+                                flex items-center justify-center overflow-hidden">
+
+                            <img src="{{ asset('storage/' . $cert->image) }}" alt="{{ $cert->title }}"
+                                class="max-w-full max-h-full object-contain">
+                        </div>
+
+                        <h3 class="mt-4 font-semibold text-sm">
+                            {{ $cert->title }}
+                        </h3>
+
+                        <p class="text-xs text-gray-400 mt-1">
+                            {{ $cert->issuer }} • {{ $cert->year }}
+                        </p>
+                    </div>
+                @endforeach
+            </div>
+
         </div>
     </section>
 

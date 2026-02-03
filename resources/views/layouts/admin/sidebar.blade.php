@@ -64,6 +64,15 @@
                 <span>Project</span>
             </a>
         </li>
+
+        {{-- CERTIFICATION --}}
+        <li>
+            <a href="{{ route('admin.certifications.index') }}"
+                class="menu-card glass-menu {{ request()->routeIs('admin.certifications.*') ? 'active' : '' }}">
+                <i class="fa fa-certificate"></i>
+                <span>Certification</span>
+            </a>
+        </li>
     </ul>
 
     <hr class="border-white opacity-25 my-4">
