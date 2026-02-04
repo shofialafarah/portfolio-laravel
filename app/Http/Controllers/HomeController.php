@@ -7,6 +7,7 @@ use App\Models\Profile;
 use App\Models\Headline;
 use App\Models\Project;
 use App\Models\Certification;
+use App\Models\Comment;
 
 class HomeController extends Controller
 {
@@ -36,6 +37,8 @@ class HomeController extends Controller
         $webSkills    = Skill::where('category', 'web')->get();
         $officeSkills = Skill::where('category', 'office')->get();
 
+        $comments = Comment::latest()->get();
+
         return view('home', compact(
             'profile',
             'headlines',
@@ -43,7 +46,8 @@ class HomeController extends Controller
             'webSkills',
             'officeSkills',
             'projects',
-            'certifications'
+            'certifications',
+            'comments',
         ));
     }
 }

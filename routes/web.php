@@ -7,6 +7,8 @@ use App\Http\Controllers\SkillController;
 use App\Http\Controllers\Admin\HeadlineController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\CertificationController;
+use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +17,9 @@ use App\Http\Controllers\Admin\CertificationController;
 */
 
 Route::get('/', [HomeController::class, 'index']);
-
+Route::get('/auth/google/redirect', [GoogleController::class, 'redirect'])->name('google.login');
+Route::get('/auth/google/callback', [GoogleController::class, 'callback']);
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 
 /*
 |--------------------------------------------------------------------------
