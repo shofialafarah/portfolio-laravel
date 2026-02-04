@@ -10,13 +10,32 @@
                 Shofia
             </a>
 
-            <div class="flex gap-6 text-sm font-medium">
-                <a href="#home" class="text-gray-700 hover:text-white transition">Home</a>
-                <a href="#skills" class="text-gray-700 hover:text-white transition">Skills</a>
-                <a href="#projects" class="text-gray-700 hover:text-white transition">Projects</a>
-                <a href="#contact" class="text-gray-700 hover:text-white transition">Contact</a>
+            <!-- MENU -->
+            <div class="flex items-center gap-6 text-sm font-medium">
+                <a href="#home" class="text-gray-700 hover:text-white transition">
+                    Home
+                </a>
+
+                <a href="#skills" class="text-gray-700 hover:text-white transition">
+                    Skills
+                </a>
+
+                <a href="#projects" class="text-gray-700 hover:text-white transition">
+                    Projects
+                </a>
+
+                <!-- Tombol Login -->
+                <a href="/login"
+                    class="px-5 py-2
+                          border border-indigo-500
+                          text-indigo-300
+                          hover:bg-indigo-600 hover:text-white
+                          transition-all duration-300
+                          rounded-lg
+                          leading-none">
+                    Login
+                </a>
             </div>
         </div>
-
     </div>
 </nav>

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
@@ -18,7 +17,12 @@ class GoogleController extends Controller
 
     public function callback()
     {
-        $googleUser = Socialite::stateless()->driver('google')->user();
+        $googleUser = Socialite::driver('google')->user();
+
+        // hanya admin yang boleh login
+        if ($googleUser->email !== 'shofia.lafarah74@gmail.com') {
+            abort(403, 'Unauthorized');
+        }
 
         $user = User::updateOrCreate(
             ['email' => $googleUser->email],
@@ -27,11 +31,13 @@ class GoogleController extends Controller
                 'google_id' => $googleUser->id,
                 'avatar' => $googleUser->avatar,
                 'email_verified_at' => now(),
-                'password' => bcrypt(Str::random(16)), // dummy password
             ]
         );
 
         Auth::login($user);
-        return redirect('/')->with('success', 'Berhasil login dengan google!');
+
+        // LANGSUNG KE DASHBOARD ADMIN
+        return redirect()->route('admin.dashboard')
+            ->with('success', 'Selamat datang Admin ✨');
     }
 }

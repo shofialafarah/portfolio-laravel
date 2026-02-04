@@ -2,13 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SkillController;
-use App\Http\Controllers\Admin\HeadlineController;
-use App\Http\Controllers\Admin\ProjectController;
-use App\Http\Controllers\Admin\CertificationController;
-use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\HeadlineController;
+use App\Http\Controllers\CommentReactionController;
+use App\Http\Controllers\Admin\CertificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,9 @@ use App\Http\Controllers\CommentController;
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/auth/google/redirect', [GoogleController::class, 'redirect'])->name('google.login');
 Route::get('/auth/google/callback', [GoogleController::class, 'callback']);
-Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
+// Route untuk comment
+Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');
+Route::post('/comment/reaction', [CommentController::class, 'reaction'])->name('comment.reaction');
 
 /*
 |--------------------------------------------------------------------------

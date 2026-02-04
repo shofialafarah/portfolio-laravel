@@ -37,7 +37,10 @@ class HomeController extends Controller
         $webSkills    = Skill::where('category', 'web')->get();
         $officeSkills = Skill::where('category', 'office')->get();
 
-        $comments = Comment::latest()->get();
+        $comments = Comment::with(['replies.reactions', 'reactions'])
+            ->whereNull('parent_id')
+            ->latest()
+            ->get();
 
         return view('home', compact(
             'profile',
