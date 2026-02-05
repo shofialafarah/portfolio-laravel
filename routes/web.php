@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Admin\ProjectController;
@@ -23,6 +24,8 @@ Route::get('/auth/google/callback', [GoogleController::class, 'callback']);
 // Route untuk comment
 Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');
 Route::post('/comment/reaction', [CommentController::class, 'reaction'])->name('comment.reaction');
+// Route untuk message/hubungi
+Route::post('/message', [MessageController::class, 'store'])->name('message.store');
 
 /*
 |--------------------------------------------------------------------------

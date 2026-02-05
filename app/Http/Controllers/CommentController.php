@@ -9,19 +9,27 @@ use App\Models\CommentReaction;
 class CommentController extends Controller
 {
     public function store(Request $request)
-    {
-        $data = $request->validate([
-            'name'      => 'required|max:255',
-            'message'   => 'required',
-            'parent_id' => 'nullable|exists:comments,id',
-        ]);
+{
+    $data = $request->validate([
+        'name'      => 'required|max:255',
+        'message'   => 'required',
+        'parent_id' => 'nullable|exists:comments,id',
+        'avatar'    => 'nullable|image|max:2048', // 👈 TAMBAH INI
+    ]);
 
-        $comment = Comment::create($data);
-
-        return response()->json([
-            'html' => view('partials.comment', compact('comment'))->render()
-        ]);
+    // SIMPAN AVATAR JIKA ADA
+    if ($request->hasFile('avatar')) {
+        $data['avatar'] = $request->file('avatar')
+            ->store('avatars', 'public');
     }
+
+    $comment = Comment::create($data);
+
+    return response()->json([
+        'html' => view('partials.comment', compact('comment'))->render()
+    ]);
+}
+
 
     public function reaction(Request $request)
     {

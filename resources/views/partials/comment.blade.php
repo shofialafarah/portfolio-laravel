@@ -1,7 +1,10 @@
 <div class="comment mb-4" id="comment-{{ $comment->id }}">
     <div class="flex items-start gap-3">
-        <img src="{{ $comment->avatar ?? 'https://ui-avatars.com/api/?name=' . urlencode($comment->name) }}"
-             class="w-10 h-10 rounded-full">
+        <img
+    src="{{ $comment->avatar
+        ? asset('storage/' . $comment->avatar)
+        : 'https://ui-avatars.com/api/?name=' . urlencode($comment->name) }}"
+    class="w-10 h-10 rounded-full object-cover border border-zinc-700">
 
         <div class="flex-1">
             <div class="bg-zinc-800 p-3 rounded-lg">

@@ -8,7 +8,7 @@
     <div class="page-loader">
         <div class="loader-content">
             <div class="loader-spinner"></div>
-            <div class="loader-text">LOADING</div>
+            <div class="loader-text">MEMUAT</div>
         </div>
     </div>
 
@@ -52,9 +52,9 @@
                         Download CV
                     </a>
 
-                    <a href="#skills"
+                    <a href="#projects"
                         class="px-6 py-3 border border-indigo-500 text-indigo-300 hover:bg-indigo-600 hover:text-white transition-all duration-300 rounded-lg hover:scale-105">
-                        Lihat Skill
+                        Lihat Project
                     </a>
                 </div>
 
@@ -99,9 +99,11 @@
 
     {{-- ================= SKILLS ================= --}}
     <section id="skills" class="max-w-7xl mx-auto px-6 py-24 scroll-reveal">
-        <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center section-title">
-            Tech Stack & Tools
-        </h2>
+        <div class="flex justify-center mb-12">
+            <h2 class="section-title text-3xl md:text-4xl font-bold text-center">
+                Tech Stack & Tools
+            </h2>
+        </div>
 
         <div class="card-glass rounded-3xl p-6 md:p-10 shadow-2xl">
             <div class="grid md:grid-cols-3 gap-8">
@@ -112,7 +114,7 @@
                     </h3>
                     <div class="grid grid-cols-3 gap-6">
                         @foreach ($designSkills as $index => $skill)
-                            <div class="text-center animate-fade-up hover:scale-110 transition-transform duration-300"
+                            <div class="text-center hover:scale-110 transition-transform duration-300"
                                 style="animation-delay: {{ $index * 0.15 }}s">
                                 <div
                                     class="bg-zinc-900/50 rounded-xl p-3 mb-2 hover:bg-indigo-600/20 transition-all duration-300">
@@ -167,14 +169,18 @@
 
     {{-- ================= PROJEK ================= --}}
     <section id="projects" class="max-w-7xl mx-auto px-6 py-24 scroll-reveal">
-        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 section-title">Projects</h2>
+        <div class="flex justify-center mb-12">
+            <h2 class="section-title text-3xl md:text-4xl font-bold text-center">
+                Projects
+            </h2>
+        </div>
 
         {{-- FILTER --}}
         <div class="flex justify-center mb-12">
             <div class="inline-flex gap-3 card-glass rounded-2xl px-6 py-4">
-                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn active" data-filter="all">Semua</button>
                 <button class="filter-btn" data-filter="web">Web</button>
-                <button class="filter-btn" data-filter="design">Design</button>
+                <button class="filter-btn" data-filter="design">Desain</button>
             </div>
         </div>
 
@@ -193,12 +199,13 @@
                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                                 alt="{{ $project->title }}">
                         </div>
-
-                        <h3 class="font-semibold text-lg text-indigo-300 group-hover:text-indigo-400 transition-colors">
-                            {{ $project->title }}
-                        </h3>
-
-                        <p class="text-sm text-gray-400 mt-2 leading-relaxed">
+                        <div class="border border-white rounded-lg p-2 mb-2">
+                            <h3
+                                class="font-semibold text-lg text-indigo-400 group-hover:text-white transition-colors text-center">
+                                {{ $project->title }}
+                            </h3>
+                        </div>
+                        <p class="text-sm text-gray-400 mt-2 leading-relaxed text-center">
                             {{ $project->description }}
                         </p>
                     </div>
@@ -209,9 +216,11 @@
 
     {{-- ================= SERTIFIKAT ================= --}}
     <section id="certifications" class="max-w-7xl mx-auto px-6 py-24 scroll-reveal">
-        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 section-title">
-            Certifications
-        </h2>
+        <div class="flex justify-center mb-12">
+            <h2 class="section-title text-3xl md:text-4xl font-bold text-center">
+                Certifications
+            </h2>
+        </div>
 
         <!-- CARD BESAR -->
         <div class="card-glass rounded-3xl p-6 md:p-10 shadow-2xl">
@@ -226,13 +235,16 @@
                             <img src="{{ asset('storage/' . $certification->image) }}" alt="{{ $certification->title }}"
                                 class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500">
                         </div>
+                        <div class="border border-white rounded-lg p-2 mb-2">
+                            <h3
+                                class="font-semibold text-sm text-indigo-400 group-hover:text-white transition-colors text-center">
+                                {{ $certification->title }}
+                            </h3>
+                        </div>
 
-                        <h3 class="font-semibold text-sm text-indigo-300 group-hover:text-indigo-400 transition-colors">
-                            {{ $certification->title }}
-                        </h3>
 
-                        <p class="text-xs text-gray-400 mt-2">
-                            {{ $certification->issuer }} • {{ $certification->year }}
+                        <p class="text-xs text-gray-400 mt-2 text-center">
+                            {{ $certification->issuer }} | {{ $certification->year }}
                         </p>
                     </div>
                 @endforeach
@@ -240,32 +252,206 @@
         </div>
     </section>
 
-    {{-- ================= KOMENTAR ================= --}}
-    <section id="comments" class="max-w-7xl mx-auto px-6 py-24">
-        <div class="card-glass rounded-3xl p-6 md:p-10">
-            {{-- FORM KOMENTAR --}}
-            <form id="commentForm" class="space-y-4 mb-10">
-                @csrf
-                <input name="name" placeholder="Nama" class="w-full px-4 py-2 rounded bg-zinc-800 text-white"
-                    required>
+    {{-- ================= KOMENTAR & KONTAK ================= --}}
+    <section id="comments" class="max-w-7xl mx-auto px-6 py-24 scroll-reveal">
+        <div class="flex justify-center mb-12">
+            <h2 class="section-title text-3xl md:text-4xl font-bold text-center">
+                Comments & Contact
+            </h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-                <textarea name="message" placeholder="Tulis komentar..." class="w-full px-4 py-2 rounded bg-zinc-800 text-white"
-                    required></textarea>
+            {{-- ================= CARD KOMENTAR ================= --}}
+            <div class="card-glass rounded-3xl p-6 md:p-8">
 
-                <button class="bg-indigo-600 px-6 py-2 rounded">Kirim</button>
-            </form>
+                {{-- HEADLINE --}}
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="bg-indigo-600/20 p-3 rounded-xl">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-indigo-400" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.77 9.77 0 01-4-.8L3 20l1.2-3A7.9 7.9 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                        </svg>
+                    </div>
+                    <h2 class="text-xl font-semibold text-white">
+                        Komentar ({{ $comments->count() }})
+                    </h2>
+                </div>
 
-            {{-- LIST KOMENTAR --}}
-            <div id="comment-list" class="space-y-6">
-                @foreach ($comments as $comment)
-                    @include('partials.comment', ['comment' => $comment])
-                @endforeach
+                {{-- FORM KOMENTAR --}}
+                <form id="commentForm" class="space-y-4">
+                    @csrf
+
+                    <div class="relative">
+                        <i class="fa-solid fa-user absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400"></i>
+                        <input name="name" placeholder="Nama"
+                            class="w-full pl-12 px-4 py-2 rounded-lg bg-zinc-800 text-white focus:ring-2 focus:ring-indigo-500"
+                            required>
+                    </div>
+
+                    <div class="relative">
+                        <i class="fa-solid fa-comment absolute left-4 top-4 text-zinc-400"></i>
+                        <textarea name="message" rows="4" placeholder="Tulis komentar..."
+                            class="w-full pl-12 px-4 py-2 rounded-lg bg-zinc-800 text-white focus:ring-2 focus:ring-indigo-500" required></textarea>
+                    </div>
+
+
+                    {{-- FOTO PROFIL (OPTIONAL) --}}
+                    <div
+                        class="bg-zinc-800 border border-zinc-700 rounded-lg p-6 text-center hover:border-indigo-500 transition">
+
+                        <img id="avatarPreview"
+                            class="w-20 h-20 rounded-full mx-auto mb-3 hidden object-cover border border-zinc-600" />
+
+
+                        <p class="text-sm text-zinc-400 mb-4">
+                            Foto Profil (Opsional)
+                        </p>
+
+                        <label
+                            class="inline-flex items-center gap-2 px-4 py-2 bg-zinc-700 hover:bg-indigo-600 rounded-lg cursor-pointer text-sm text-white transition">
+                            <i class="fa-solid fa-upload"></i>
+                            Pilih Foto
+                            <input type="file" name="avatar" id="avatarInput" class="hidden" accept="image/*">
+                        </label>
+                    </div>
+
+
+
+                    <button type="submit"
+                        class="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 transition px-6 py-2 rounded-lg text-white font-medium">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        Kirim Komentar
+                    </button>
+
+                    {{-- PEMBATAS --}}
+                    <hr class="my-8 border-zinc-700">
+
+                </form>
+                {{-- LIST KOMENTAR --}}
+                <div id="comment-list" class="mt-10 space-y-6 max-h-[300px] overflow-y-auto pr-3 comment-scroll">
+                    @foreach ($comments as $comment)
+                        @include('partials.comment', ['comment' => $comment])
+                    @endforeach
+                </div>
+
+
+            </div>
+
+            {{-- ================= CARD HUBUNGI SAYA ================= --}}
+            <div class="card-glass rounded-3xl p-6 md:p-8">
+
+                {{-- HEADLINE --}}
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="bg-indigo-600/20 p-3 rounded-xl">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-indigo-400" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.77 9.77 0 01-4-.8L3 20l1.2-3A7.9 7.9 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                        </svg>
+                    </div>
+                    <h2 class="text-xl font-semibold text-white">
+                        Hubungi Saya
+                    </h2>
+                </div>
+
+
+                <form id="messageForm" class="space-y-4">
+                    @csrf
+
+                    <div class="relative">
+                        <i class="fa-solid fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400"></i>
+                        <input type="email" name="email" placeholder="email-mu@gmail.com"
+                            class="w-full pl-12 px-4 py-2 rounded-lg bg-zinc-800 text-white focus:ring-2 focus:ring-indigo-500"
+                            required>
+                    </div>
+
+                    <div class="relative">
+                        <i class="fa-solid fa-phone absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400"></i>
+                        <input type="text" name="phone" value="+62"
+                            class="w-full pl-12 px-4 py-2 rounded-lg bg-zinc-800 text-white focus:ring-2 focus:ring-indigo-500"
+                            required>
+                    </div>
+                    <div class="relative">
+                        <i class="fa-solid fa-comment absolute left-4 top-4 text-zinc-400"></i>
+                        <textarea name="message" rows="4" placeholder="Pesan"
+                            class="w-full pl-12 px-4 py-2 rounded-lg bg-zinc-800 text-white focus:ring-2 focus:ring-indigo-500" required></textarea>
+                    </div>
+                    <button type="submit"
+                        class="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 transition px-6 py-2 rounded-lg text-white font-medium">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        Kirim Pesan
+                    </button>
+
+                    {{-- PEMBATAS --}}
+                    <hr class="my-8 border-zinc-700">
+
+                    {{-- CONNECT WITH ME --}}
+                    <div
+                        class="bg-gradient-to-br from-zinc-800/80 to-zinc-900/80 border border-zinc-700 rounded-2xl p-8 backdrop-blur-sm">
+                        <p class="text-white font-semibold mb-6 flex items-center gap-2 text-lg">
+                            <i class="fa-solid fa-share-nodes text-indigo-400"></i>
+                            Connect with me
+                        </p>
+
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <!-- Instagram -->
+                            <a href="https://instagram.com/shofialafarah" target="_blank"
+                                class="group flex flex-col items-center gap-3 p-6 rounded-xl bg-zinc-700/40 border border-zinc-600 hover:border-pink-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-pink-500/20">
+                                <div
+                                    class="w-14 h-14 rounded-xl bg-zinc-600 group-hover:bg-gradient-to-br group-hover:from-pink-500 group-hover:to-orange-400 flex items-center justify-center transition-all duration-300">
+                                    <i class="fa-brands fa-instagram text-white text-xl"></i>
+                                </div>
+                                <span
+                                    class="text-sm font-medium text-gray-300 group-hover:text-white transition">Instagram</span>
+                            </a>
+
+                            <!-- LinkedIn -->
+                            <a href="https://linkedin.com/in/shofia-nabila-elfa-rahma" target="_blank"
+                                class="group flex flex-col items-center gap-3 p-6 rounded-xl bg-zinc-700/40 border border-zinc-600 hover:border-blue-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-blue-500/20">
+                                <div
+                                    class="w-14 h-14 rounded-xl bg-zinc-600 group-hover:bg-gradient-to-br group-hover:from-blue-500 group-hover:to-blue-600 flex items-center justify-center transition-all duration-300">
+                                    <i class="fa-brands fa-linkedin text-white text-xl"></i>
+                                </div>
+                                <span
+                                    class="text-sm font-medium text-gray-300 group-hover:text-white transition">LinkedIn</span>
+                            </a>
+
+                            <!-- GitHub -->
+                            <a href="https://github.com/shofialafarah" target="_blank"
+                                class="group flex flex-col items-center gap-3 p-6 rounded-xl bg-zinc-700/40 border border-zinc-600 hover:border-gray-300 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-gray-500/20">
+                                <div
+                                    class="w-14 h-14 rounded-xl bg-zinc-600 group-hover:bg-gradient-to-br group-hover:from-gray-700 group-hover:to-black flex items-center justify-center transition-all duration-300">
+                                    <i class="fa-brands fa-github text-white text-xl"></i>
+                                </div>
+                                <span
+                                    class="text-sm font-medium text-gray-300 group-hover:text-white transition">GitHub</span>
+                            </a>
+
+                            <!-- Behance -->
+                            <a href="https://behance.net/shofialafarah" target="_blank"
+                                class="group flex flex-col items-center gap-3 p-6 rounded-xl bg-zinc-700/40 border border-zinc-600 hover:border-cyan-400 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/20">
+                                <div
+                                    class="w-14 h-14 rounded-xl bg-zinc-600 group-hover:bg-gradient-to-br group-hover:from-cyan-400 group-hover:to-blue-500 flex items-center justify-center transition-all duration-300">
+                                    <i class="fa-brands fa-behance text-white text-xl"></i>
+                                </div>
+                                <span
+                                    class="text-sm font-medium text-gray-300 group-hover:text-white transition">Behance</span>
+                            </a>
+                        </div>
+                    </div>
+
+
+                </form>
+
             </div>
         </div>
     </section>
+
 @endsection
 
 @section('scripts')
+    {{-- TYPING EFFECT DI HOME --}}
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const texts = @json($headlines);
@@ -299,69 +485,125 @@
             typeEffect();
         });
     </script>
+    {{-- KOMENTAR AJAX --}}
     <script>
         document.addEventListener('submit', async function(e) {
+            const form = e.target
 
-            if (e.target.matches('.reply-form') || e.target.matches('#commentForm')) {
+            if (form.classList.contains('reply-form') || form.id === 'commentForm') {
                 e.preventDefault()
+                console.log('Form submitted:', form.id)
 
-                const form = e.target
                 const formData = new FormData(form)
+                console.log('CSRF Token:', '{{ csrf_token() }}')
 
-                const res = await fetch("{{ route('comment.store') }}", {
+                try {
+                    const res = await fetch("{{ route('comment.store') }}", {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: formData
+                    })
+
+                    const responseText = await res.text()
+                    console.log('Response status:', res.status)
+                    console.log('Response text:', responseText)
+
+                    if (!res.ok) {
+                        alert('Error ' + res.status + ': ' + responseText.substring(0, 200))
+                        return
+                    }
+
+                    const data = JSON.parse(responseText)
+
+                    if (form.dataset.parent) {
+                        form.insertAdjacentHTML('beforebegin', data.html)
+                        form.reset()
+                        form.classList.add('hidden')
+                    } else {
+                        document.getElementById('comment-list')
+                            .insertAdjacentHTML('afterbegin', data.html)
+                        form.reset()
+                        alert('Komentar berhasil dikirim!')
+                    }
+                } catch (error) {
+                    console.error('Error:', error)
+                    alert('Terjadi kesalahan: ' + error.message)
+                }
+            }
+        })
+
+
+
+        // LIKE BUTTON
+        document.addEventListener('click', async function(e) {
+
+            const likeBtn = e.target.closest('.like-btn')
+            if (likeBtn) {
+                const id = likeBtn.dataset.id
+
+                const res = await fetch("{{ route('comment.reaction') }}", {
                     method: 'POST',
                     headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json'
                     },
-                    body: formData
+                    body: JSON.stringify({
+                        comment_id: id
+                    })
                 })
 
                 const data = await res.json()
+                likeBtn.querySelector('.like-count').innerText = data.count
+            }
 
-                if (form.dataset.parent) {
-                    form.insertAdjacentHTML('beforebegin', data.html)
-                    form.reset()
-                    form.classList.add('hidden')
-                } else {
-                    document.getElementById('comment-list')
-                        .insertAdjacentHTML('afterbegin', data.html)
-                    form.reset()
-                }
+            // REPLY
+            if (e.target.classList.contains('reply-btn')) {
+                const id = e.target.dataset.id
+                const form = document.querySelector(`.reply-form[data-parent="${id}"]`)
+                form.classList.toggle('hidden')
             }
 
         })
-
-        document.addEventListener('click', async function(e) {
-
-    const likeBtn = e.target.closest('.like-btn')
-    if (likeBtn) {
-        const id = likeBtn.dataset.id
-
-        const res = await fetch("{{ route('comment.reaction') }}", {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                comment_id: id
-            })
-        })
-
-        const data = await res.json()
-        likeBtn.querySelector('.like-count').innerText = data.count
-    }
-
-    // REPLY
-    if (e.target.classList.contains('reply-btn')) {
-        const id = e.target.dataset.id
-        const form = document.querySelector(`.reply-form[data-parent="${id}"]`)
-        form.classList.toggle('hidden')
-    }
-
-})
-
     </script>
+    {{-- AVATAR PREVIEW --}}
+    <script>
+        document.getElementById('avatarInput')?.addEventListener('change', function(e) {
+            const file = e.target.files[0]
+            if (!file) return
+
+            const preview = document.getElementById('avatarPreview')
+            const icon = document.getElementById('avatarIcon')
+
+            if (preview) {
+                preview.src = URL.createObjectURL(file)
+                preview.classList.remove('hidden')
+            }
+            if (icon) {
+                icon.classList.add('hidden')
+            }
+        })
+    </script>
+    {{-- SCROLL REVEAL ANIMATION --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed')
+                    }
+                })
+            }, {
+                threshold: 0.25
+            })
+
+            document.querySelectorAll('.scroll-reveal')
+                .forEach(el => observer.observe(el))
+        })
+    </script>
+
+
 
 
 @endsection
