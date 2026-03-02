@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Tambah Skill Baru - Admin')
+@section('title', 'Tambah Skill')
 
 @section('content')
 <div class="max-w-2xl mx-auto">

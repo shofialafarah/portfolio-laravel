@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Kelola Skill - Admin')
+@section('title', 'Skill')
 
 @section('content')
 <div class="max-w-7xl mx-auto">
