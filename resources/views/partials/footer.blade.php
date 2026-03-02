@@ -1,4 +1,5 @@
-<footer class="bg-gradient-to-b from-zinc-900 to-black mt-20 pb-8 border-t border-zinc-800 relative overflow-hidden" style="border-radius: 50px 50px 0 0;">
+<footer class="bg-gradient-to-b from-zinc-900 to-black mt-20 pb-8 border-t border-zinc-800 relative overflow-hidden"
+    style="border-radius: 50px 50px 0 0;">
     <!-- Grid Background -->
     <div class="absolute inset-0 opacity-5">
         <div class="grid-pattern"></div>
@@ -13,7 +14,8 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
             <!-- Branding -->
             <div>
-                <h3 class="text-2xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent mb-3">
+                <h3
+                    class="text-2xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent mb-3">
                     Shofia Nabila Elfa Rahma
                 </h3>
                 <p class="text-gray-400 text-sm leading-relaxed">
@@ -56,10 +58,23 @@
         </div>
 
         <!-- Divider -->
+
         <div class="border-t border-zinc-800 pt-8">
-            <div class="flex flex-col md:flex-row justify-between items-center text-center md:text-left text-sm text-gray-500">
-                <p>© {{ date('Y') }} Shofia Lafarah. All rights reserved.</p>
-                <p class="mt-4 md:mt-0">Designed & Developed by Shofia</p>
+            <div
+                class="flex flex-col md:flex-row justify-between items-center text-center md:text-left text-sm text-gray-500">
+                <p>
+                    © {{ date('Y') }}
+                    {{-- Link Rahasia ke Login --}}
+                    <a href="{{ route('login') }}" class="hover:text-zinc-400 transition-colors cursor-default">
+                        Shofia Lafarah
+                    </a>. All rights reserved.
+                </p>
+
+                {{-- Kamu juga bisa taruh di sini --}}
+                <p class="mt-4 md:mt-0">
+                    Designed & Developed by
+                    <a href="{{ route('login') }}" class="hover:text-gray-400 cursor-default">Shofia</a>
+                </p>
             </div>
         </div>
     </div>

@@ -9,10 +9,15 @@ use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $projects = Project::orderBy('created_at', 'desc')->get();
-        return view('admin.projects.index', compact('projects'));
+        $category = $request->query('category');
+
+        $projects = Project::when($category, function ($query, $category) {
+            return $query->where('category', $category);
+        })->orderBy('created_at', 'asc')->get();
+
+        return view('admin.projects.index', compact('projects', 'category'));
     }
 
     public function create()
@@ -22,22 +27,24 @@ class ProjectController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'title' => 'required',
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
             'category' => 'required|in:web,design',
-            'description' => 'nullable',
-            'image' => 'nullable|image|max:2048'
+            'description' => 'required',
+            'image' => 'required|image|mimes:jpg,png,jpeg|max:2048',
+            'link_deploy' => 'nullable|url',
+            'link_github' => 'nullable|url',
+            'tech_stack' => 'nullable|string',
         ]);
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('projects', 'public');
+            $validated['image'] = $request->file('image')->store('projects', 'public');
         }
 
-        Project::create($data);
+        Project::create($validated);
 
-        return redirect()
-            ->route('admin.projects.index')
-            ->with('success', 'Project berhasil ditambahkan');
+        return redirect()->route('admin.projects.index', ['category' => $request->category])
+            ->with('success', 'Project berhasil ditambahkan!');
     }
 
     public function edit(Project $project)
@@ -51,7 +58,10 @@ class ProjectController extends Controller
             'title' => 'required',
             'category' => 'required|in:web,design',
             'description' => 'nullable',
-            'image' => 'nullable|image|max:2048'
+            'image' => 'nullable|image|max:2048',
+            'link_deploy' => 'nullable|url',
+            'link_github' => 'nullable|url',
+            'tech_stack' => 'nullable|string',
         ]);
 
         if ($request->hasFile('image')) {
@@ -64,7 +74,7 @@ class ProjectController extends Controller
         $project->update($data);
 
         return redirect()
-            ->route('admin.projects.index')
+            ->route('admin.projects.index', ['category' => $project->category])
             ->with('success', 'Project berhasil diperbarui');
     }
 
@@ -75,6 +85,6 @@ class ProjectController extends Controller
         }
 
         $project->delete();
-        return back();
+        return back()->with('success', 'Project berhasil dihapus secara permanen!');
     }
 }

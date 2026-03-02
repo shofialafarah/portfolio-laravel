@@ -10,7 +10,7 @@ use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\HeadlineController;
 use App\Http\Controllers\Admin\CertificationController;
-// Pastikan memanggil controller admin yang benar
+use App\Http\Controllers\Admin\MessageController as AdminMessageController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 
 /*
@@ -94,6 +94,9 @@ Route::middleware('auth')
         Route::get('/certifications/{certification}/edit', [CertificationController::class, 'edit'])->name('certifications.edit');
         Route::put('/certifications/{certification}', [CertificationController::class, 'update'])->name('certifications.update');
         Route::delete('/certifications/{certification}', [CertificationController::class, 'destroy'])->name('certifications.destroy');
+
+        Route::get('/messages', [AdminMessageController::class, 'index'])->name('messages.index');
+        Route::delete('/messages/{message}', [AdminMessageController::class, 'destroy'])->name('messages.destroy');
     });
 
 require __DIR__ . '/auth.php';

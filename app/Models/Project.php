@@ -12,5 +12,8 @@ class Project extends Model
         'image',
         'category',
         'is_active',
+        'link_deploy',
+        'link_github',
+        'tech_stack',
     ];
 }

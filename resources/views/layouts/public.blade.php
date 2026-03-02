@@ -12,7 +12,24 @@
     @endphp
 
     <link rel="icon" type="image/png" href="{{ $favicon }}">
+    <style>
+        /* 1. Keadaan awal: Elemen tidak terlihat dan agak turun ke bawah */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            visibility: hidden;
+            /* Mencegah elemen ter-klik sebelum muncul */
+        }
 
+        /* 2. Keadaan setelah kena sensor JS (Class 'revealed' ditambahkan) */
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="bg-[#100425] text-gray-100">

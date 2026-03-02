@@ -7,7 +7,7 @@
 
         <div class="flex items-center justify-between relative">
             <!-- Brand (left) -->
-            <a href="/" class="text-xl font-bold text-indigo-600">
+            <a href="/" class="text-xl font-bold text-indigo-600 hover:text-white">
                 Shofia
             </a>
 
@@ -34,17 +34,6 @@
 
             <!-- Right side: Login + Hamburger -->
             <div class="flex items-center gap-3">
-                <!-- Tombol Login -->
-                <a href="/login"
-                    class="px-4 sm:px-5 py-2
-                          border border-indigo-500
-                          text-indigo-300
-                          hover:bg-indigo-600 hover:text-white
-                          transition-all duration-300
-                          rounded-lg
-                          leading-none text-sm">
-                    Login
-                </a>
 
                 <!-- Hamburger button — visible on mobile only -->
                 <button id="hamburger-btn"
