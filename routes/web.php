@@ -12,7 +12,16 @@ use App\Http\Controllers\Admin\HeadlineController;
 use App\Http\Controllers\Admin\CertificationController;
 use App\Http\Controllers\Admin\MessageController as AdminMessageController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
+use Illuminate\Support\Facades\DB;
 
+Route::get('/cek-db', function () {
+    try {
+        DB::connection()->getPdo();
+        return "Koneksi Berhasil ke Database: " . DB::connection()->getDatabaseName();
+    } catch (\Exception $e) {
+        return "Gagal Koneksi: " . $e->getMessage();
+    }
+});
 /*
 |--------------------------------------------------------------------------
 | PUBLIC ROUTES
