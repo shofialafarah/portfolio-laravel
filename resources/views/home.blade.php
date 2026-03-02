@@ -18,19 +18,19 @@
     </div>
 
     {{-- ================= HOME ================= --}}
-    <section id="home" class="max-w-7xl mx-auto px-6 py-24">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <section id="home" class="max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-20 md:py-24">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
 
             {{-- KIRI --}}
             <div class="animate-fade-in-left">
-                <h1 class="text-4xl md:text-5xl font-bold mb-4">
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-center md:text-left">
                     Halo, saya <span class="text-indigo-400">{{ $profile->name }}</span>
                 </h1>
-                <h2 class="text-xl md:text-2xl font-semibold mb-6">
+                <h2 class="text-lg sm:text-xl md:text-2xl font-semibold mb-6 text-center md:text-left">
                     <span class="text-indigo-300" id="typing-text"></span><span class="typing-cursor text-white">|</span>
                 </h2>
 
-                <p class="text-gray-300 leading-relaxed mb-8">
+                <p class="text-gray-300 leading-relaxed mb-8 text-sm sm:text-base text-center md:text-left">
                     {{-- {{ $profile->about }} --}}
                     Saya fresh graduate dari
                     <span class="text-indigo-300 font-medium">
@@ -46,7 +46,7 @@
                 </p>
 
                 {{-- BUTTON --}}
-                <div class="flex flex-wrap gap-4 mb-8">
+                <div class="flex flex-wrap gap-4 mb-8 justify-center md:justify-start">
                     <a href="{{ asset('cv/CV_Shofia Nabila Elfa Rahma.pdf') }}" download
                         class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 transition-all duration-300 rounded-lg font-semibold hover:shadow-lg hover:scale-100">
                         Download CV
@@ -59,7 +59,7 @@
                 </div>
 
                 {{-- SOSMED --}}
-                <div class="flex gap-5 text-2xl text-gray-400">
+                <div class="flex gap-5 text-2xl text-gray-400 justify-center md:justify-start">
                     <a href="https://instagram.com/shofialafarah" target="_blank"
                         class="hover:text-pink-400 transition-all duration-300 hover:scale-125 hover:-rotate-6">
                         <i class="fab fa-instagram"></i>
@@ -89,8 +89,8 @@
                     <div
                         class="absolute inset-0 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 rounded-full blur-3xl opacity-40 animate-pulse">
                     </div>
-                    <img src="{{ $photo }}" alt="Foto Profil"
-                        class="relative w-72 h-72 rounded-full border-4 border-indigo-500 shadow-2xl shadow-indigo-500/50 object-cover hover:scale-105 transition-transform duration-500">
+                        <img src="{{ $photo }}" alt="Foto Profil"
+                        class="relative w-52 h-52 sm:w-64 sm:h-64 md:w-72 md:h-72 rounded-full border-4 border-indigo-500 shadow-2xl shadow-indigo-500/50 object-cover hover:scale-105 transition-transform duration-500">
                 </div>
             </div>
 
@@ -98,15 +98,15 @@
     </section>
 
     {{-- ================= SKILLS ================= --}}
-    <section id="skills" class="max-w-7xl mx-auto px-6 py-24 scroll-reveal">
+    <section id="skills" class="max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-20 md:py-24 scroll-reveal">
         <div class="flex justify-center mb-12">
             <h2 class="section-title text-3xl md:text-4xl font-bold text-center">
                 Tech Stack & Tools
             </h2>
         </div>
 
-        <div class="card-glass rounded-3xl p-6 md:p-10 shadow-2xl">
-            <div class="grid md:grid-cols-3 gap-8">
+        <div class="card-glass rounded-3xl p-4 sm:p-6 md:p-10 shadow-2xl">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
                 {{-- DESIGN --}}
                 <div class="card-inner rounded-2xl p-6 hover:-translate-y-2 transition-all duration-300">
                     <h3 class="text-xl font-semibold mb-6 text-indigo-400 text-center">
@@ -168,7 +168,7 @@
     </section>
 
     {{-- ================= PROJEK ================= --}}
-    <section id="projects" class="max-w-7xl mx-auto px-6 py-24 scroll-reveal">
+    <section id="projects" class="max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-20 md:py-24 scroll-reveal">
         <div class="flex justify-center mb-12">
             <h2 class="section-title text-3xl md:text-4xl font-bold text-center">
                 Projects
@@ -176,17 +176,17 @@
         </div>
 
         {{-- FILTER --}}
-        <div class="flex justify-center mb-12">
-            <div class="inline-flex gap-3 card-glass rounded-2xl px-6 py-4">
+        <div class="flex justify-center mb-8 md:mb-12">
+            <div class="inline-flex flex-wrap gap-2 sm:gap-3 card-glass rounded-2xl px-4 sm:px-6 py-3 sm:py-4">
                 <button class="filter-btn active" data-filter="all">Semua</button>
                 <button class="filter-btn" data-filter="web">Web</button>
                 <button class="filter-btn" data-filter="design">Desain</button>
             </div>
         </div>
 
-        <div class="card-glass rounded-3xl p-6 md:p-10 shadow-2xl">
+        <div class="card-glass rounded-3xl p-4 sm:p-6 md:p-10 shadow-2xl">
             <!-- GRID PROJECT -->
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                 @foreach ($projects as $project)
                     <div class="project-card {{ $project->category }} card-inner rounded-2xl p-4 overflow-hidden group">
 
@@ -215,7 +215,7 @@
     </section>
 
     {{-- ================= SERTIFIKAT ================= --}}
-    <section id="certifications" class="max-w-7xl mx-auto px-6 py-24 scroll-reveal">
+    <section id="certifications" class="max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-20 md:py-24 scroll-reveal">
         <div class="flex justify-center mb-12">
             <h2 class="section-title text-3xl md:text-4xl font-bold text-center">
                 Certifications
@@ -223,8 +223,8 @@
         </div>
 
         <!-- CARD BESAR -->
-        <div class="card-glass rounded-3xl p-6 md:p-10 shadow-2xl">
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="card-glass rounded-3xl p-4 sm:p-6 md:p-10 shadow-2xl">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                 @foreach ($certifications as $certification)
                     <div class="card-inner rounded-2xl p-5 group hover:-translate-y-2 transition-all duration-300">
 
@@ -253,16 +253,16 @@
     </section>
 
     {{-- ================= KOMENTAR & KONTAK ================= --}}
-    <section id="comments" class="max-w-7xl mx-auto px-6 py-24 scroll-reveal">
+    <section id="comments" class="max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-20 md:py-24 scroll-reveal">
         <div class="flex justify-center mb-12">
             <h2 class="section-title text-3xl md:text-4xl font-bold text-center">
                 Comments & Contact
             </h2>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
 
             {{-- ================= CARD KOMENTAR ================= --}}
-            <div class="card-glass rounded-3xl p-6 md:p-8">
+            <div class="card-glass rounded-3xl p-4 sm:p-6 md:p-8">
 
                 {{-- HEADLINE --}}
                 <div class="flex items-center gap-4 mb-6">
@@ -339,7 +339,7 @@
             </div>
 
             {{-- ================= CARD HUBUNGI SAYA ================= --}}
-            <div class="card-glass rounded-3xl p-6 md:p-8">
+            <div class="card-glass rounded-3xl p-4 sm:p-6 md:p-8">
 
                 {{-- HEADLINE --}}
                 <div class="flex items-center gap-4 mb-6">
@@ -394,10 +394,10 @@
                             Connect with me
                         </p>
 
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="grid grid-cols-2 gap-3 sm:gap-4">
                             <!-- Instagram -->
                             <a href="https://instagram.com/shofialafarah" target="_blank"
-                                class="group flex flex-col items-center gap-3 p-6 rounded-xl bg-zinc-700/40 border border-zinc-600 hover:border-pink-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-pink-500/20">
+                                class="group flex flex-col items-center gap-2 sm:gap-3 p-3 sm:p-6 rounded-xl bg-zinc-700/40 border border-zinc-600 hover:border-pink-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-pink-500/20">
                                 <div
                                     class="w-14 h-14 rounded-xl bg-zinc-600 group-hover:bg-gradient-to-br group-hover:from-pink-500 group-hover:to-orange-400 flex items-center justify-center transition-all duration-300">
                                     <i class="fa-brands fa-instagram text-white text-xl"></i>
@@ -408,7 +408,7 @@
 
                             <!-- LinkedIn -->
                             <a href="https://linkedin.com/in/shofia-nabila-elfa-rahma" target="_blank"
-                                class="group flex flex-col items-center gap-3 p-6 rounded-xl bg-zinc-700/40 border border-zinc-600 hover:border-blue-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-blue-500/20">
+                                class="group flex flex-col items-center gap-2 sm:gap-3 p-3 sm:p-6 rounded-xl bg-zinc-700/40 border border-zinc-600 hover:border-blue-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-blue-500/20">
                                 <div
                                     class="w-14 h-14 rounded-xl bg-zinc-600 group-hover:bg-gradient-to-br group-hover:from-blue-500 group-hover:to-blue-600 flex items-center justify-center transition-all duration-300">
                                     <i class="fa-brands fa-linkedin text-white text-xl"></i>
@@ -419,7 +419,7 @@
 
                             <!-- GitHub -->
                             <a href="https://github.com/shofialafarah" target="_blank"
-                                class="group flex flex-col items-center gap-3 p-6 rounded-xl bg-zinc-700/40 border border-zinc-600 hover:border-gray-300 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-gray-500/20">
+                                class="group flex flex-col items-center gap-2 sm:gap-3 p-3 sm:p-6 rounded-xl bg-zinc-700/40 border border-zinc-600 hover:border-gray-300 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-gray-500/20">
                                 <div
                                     class="w-14 h-14 rounded-xl bg-zinc-600 group-hover:bg-gradient-to-br group-hover:from-gray-700 group-hover:to-black flex items-center justify-center transition-all duration-300">
                                     <i class="fa-brands fa-github text-white text-xl"></i>
@@ -430,7 +430,7 @@
 
                             <!-- Behance -->
                             <a href="https://behance.net/shofialafarah" target="_blank"
-                                class="group flex flex-col items-center gap-3 p-6 rounded-xl bg-zinc-700/40 border border-zinc-600 hover:border-cyan-400 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/20">
+                                class="group flex flex-col items-center gap-2 sm:gap-3 p-3 sm:p-6 rounded-xl bg-zinc-700/40 border border-zinc-600 hover:border-cyan-400 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/20">
                                 <div
                                     class="w-14 h-14 rounded-xl bg-zinc-600 group-hover:bg-gradient-to-br group-hover:from-cyan-400 group-hover:to-blue-500 flex items-center justify-center transition-all duration-300">
                                     <i class="fa-brands fa-behance text-white text-xl"></i>

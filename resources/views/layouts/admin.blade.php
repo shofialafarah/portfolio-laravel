@@ -24,7 +24,7 @@
 
         {{-- SIDEBAR --}}
         <aside class="admin-sidebar">
-            @include('layouts.admin.sidebar')
+            @include('layouts.sidebar')
         </aside>
 
         {{-- CONTENT --}}

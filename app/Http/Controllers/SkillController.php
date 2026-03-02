@@ -67,7 +67,7 @@ class SkillController extends Controller
         ]);
 
         return redirect()->route('admin.skills.index')
-            ->with('success', 'Skill berhasil ditambahkan');
+            ->with('success', 'Skill baru berhasil ditambahkan!');
     }
 
 

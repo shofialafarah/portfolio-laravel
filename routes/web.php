@@ -9,31 +9,34 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\HeadlineController;
-use App\Http\Controllers\CommentReactionController;
 use App\Http\Controllers\Admin\CertificationController;
+// Pastikan memanggil controller admin yang benar
+use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 
 /*
 |--------------------------------------------------------------------------
-| PUBLIC
+| PUBLIC ROUTES
 |--------------------------------------------------------------------------
 */
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/', [HomeController::class, 'index']);
+// Google Auth
 Route::get('/auth/google/redirect', [GoogleController::class, 'redirect'])->name('google.login');
 Route::get('/auth/google/callback', [GoogleController::class, 'callback']);
-// Route untuk comment
+
+// Interaction
 Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');
 Route::post('/comment/reaction', [CommentController::class, 'reaction'])->name('comment.reaction');
-// Route untuk message/hubungi
 Route::post('/message', [MessageController::class, 'store'])->name('message.store');
 
 /*
 |--------------------------------------------------------------------------
-| AUTH (breeze)
+| AUTH (Breeze & Redirect Fix)
 |--------------------------------------------------------------------------
 */
+// Jembatan: Menangani redirect default Breeze agar tidak error 404/500
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return redirect()->route('admin.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -42,10 +45,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
 /*
 |--------------------------------------------------------------------------
-| ADMIN PANEL
+| ADMIN PANEL (Manual Routes)
 |--------------------------------------------------------------------------
 */
 Route::middleware('auth')
@@ -53,29 +55,45 @@ Route::middleware('auth')
     ->name('admin.')
     ->group(function () {
 
-        // Dashboard
+        // Dashboard Admin
         Route::get('/dashboard', function () {
             return view('admin.dashboard');
         })->name('dashboard');
 
-        // === PROFILE (single data, no resource) ===
-        Route::get('/profile', [\App\Http\Controllers\Admin\ProfileController::class, 'edit'])
-            ->name('profile.edit');
+        // === ADMIN PROFILE ===
+        Route::get('/profile', [AdminProfileController::class, 'edit'])->name('profile.edit');
+        Route::post('/profile', [AdminProfileController::class, 'update'])->name('profile.update');
 
-        Route::post('/profile', [\App\Http\Controllers\Admin\ProfileController::class, 'update'])
-            ->name('profile.update');
+        // === HEADLINES (Manual) ===
+        Route::get('/headlines', [HeadlineController::class, 'index'])->name('headlines.index');
+        Route::post('/headlines', [HeadlineController::class, 'store'])->name('headlines.store');
+        Route::put('/headlines/{headline}', [HeadlineController::class, 'update'])->name('headlines.update');
+        Route::delete('/headlines/{headline}', [HeadlineController::class, 'destroy'])->name('headlines.destroy');
+        Route::post('/headlines/reorder', [HeadlineController::class, 'reorder'])->name('headlines.reorder');
 
-        // === HEADLINES ===
-        Route::resource('headlines', HeadlineController::class)
-            ->except(['create', 'show', 'edit']);
+        // === SKILLS (Manual) ===
+        Route::get('/skills', [SkillController::class, 'index'])->name('skills.index');
+        Route::get('/skills/create', [SkillController::class, 'create'])->name('skills.create');
+        Route::post('/skills', [SkillController::class, 'store'])->name('skills.store');
+        Route::get('/skills/{skill}/edit', [SkillController::class, 'edit'])->name('skills.edit');
+        Route::put('/skills/{skill}', [SkillController::class, 'update'])->name('skills.update');
+        Route::delete('/skills/{skill}', [SkillController::class, 'destroy'])->name('skills.destroy');
 
-        Route::post('/headlines/reorder', [HeadlineController::class, 'reorder'])
-            ->name('headlines.reorder');
+        // === PROJECTS (Manual) ===
+        Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
+        Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
+        Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
+        Route::get('/projects/{project}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
+        Route::put('/projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
+        Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
 
-        // === RESOURCE FULL ===
-        Route::resource('skills', SkillController::class);
-        Route::resource('projects', ProjectController::class);
-        Route::resource('certifications', CertificationController::class);
+        // === CERTIFICATIONS (Manual) ===
+        Route::get('/certifications', [CertificationController::class, 'index'])->name('certifications.index');
+        Route::get('/certifications/create', [CertificationController::class, 'create'])->name('certifications.create');
+        Route::post('/certifications', [CertificationController::class, 'store'])->name('certifications.store');
+        Route::get('/certifications/{certification}/edit', [CertificationController::class, 'edit'])->name('certifications.edit');
+        Route::put('/certifications/{certification}', [CertificationController::class, 'update'])->name('certifications.update');
+        Route::delete('/certifications/{certification}', [CertificationController::class, 'destroy'])->name('certifications.destroy');
     });
 
 require __DIR__ . '/auth.php';
