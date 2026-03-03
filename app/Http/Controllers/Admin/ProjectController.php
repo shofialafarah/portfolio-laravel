@@ -7,6 +7,7 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
@@ -59,9 +60,9 @@ class ProjectController extends Controller
         $project->tech_stack = $request->tech_stack;
 
         // Ini poin krusialnya: Paksa boolean murni
-        $project->is_active = filter_var(true, FILTER_VALIDATE_BOOLEAN);
+        $project->is_active = DB::raw('true');
 
-    $project->save();
+        $project->save();
 
 
         return redirect()->route('admin.projects.index', ['category' => $request->category])
