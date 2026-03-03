@@ -7,15 +7,16 @@ export default {
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
+        './resources/**/*.js', // Tambahkan ini
     ],
-
+    darkMode: 'class', // Tambahkan ini
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                // Tambahkan font Bricolage Grotesque di sini
+                sans: ['Bricolage Grotesque', ...defaultTheme.fontFamily.sans],
             },
         },
     },
-
     plugins: [forms],
 };

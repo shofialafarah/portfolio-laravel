@@ -6,20 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title') | Portfolio Admin</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- 1. Tetap panggil Font dari Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com">
 
+    <!-- 2. PANGGIL VITE (Gantikan script CDN Tailwind yang lama) -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <!-- 3. Alpine.js (Tetap biarkan jika kamu pakai) -->
+    <script defer src="https://cdn.jsdelivr.net"></script>
+
+    <!-- 4. Style tambahan manual (Opsional) -->
     <style>
-        .transition-all {
-            transition: all 0.3s ease;
-        }
-
-        .rotate-180 {
-            transform: rotate(180deg);
-        }
-
-        /* Efek active untuk sub-menu */
+        .transition-all { transition: all 0.3s ease; }
+        .rotate-180 { transform: rotate(180deg); }
         .menu-sub.active {
             background: rgba(255, 255, 255, 0.15);
             color: #fff !important;
@@ -29,29 +29,11 @@
 
     @php
         $adminProfile = \App\Models\Profile::first();
-
-        $favicon =
-            $adminProfile && $adminProfile->photo
+        $favicon = $adminProfile && $adminProfile->photo
                 ? asset('storage/' . $adminProfile->photo)
                 : asset('images/profile.jpg');
     @endphp
-
     <link rel="icon" type="image/png" href="{{ $favicon }}">
-
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Bricolage Grotesque', 'sans-serif'],
-                    },
-                }
-            }
-        }
-    </script>
 </head>
 
 <body class="bg-[#09090b] text-zinc-100 font-sans antialiased">
