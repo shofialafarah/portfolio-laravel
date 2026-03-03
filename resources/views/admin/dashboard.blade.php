@@ -1,3 +1,8 @@
+@php
+    use App\Models\Skill;
+    use App\Models\Project;
+    use App\Models\Certification;
+@endphp
 @extends('layouts.app')
 @section('title', 'Dashboard')
 @section('content')
