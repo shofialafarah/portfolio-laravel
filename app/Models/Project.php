@@ -16,8 +16,14 @@ class Project extends Model
         'link_github',
         'tech_stack',
     ];
-    // Tambahkan ini agar Laravel otomatis konversi tipe data
+    
     protected $casts = [
         'is_active' => 'boolean',
     ];
+
+    // Tambahkan ini: Memaksa nilai menjadi boolean murni sebelum masuk ke Query Builder
+    public function setIsActiveAttribute($value)
+    {
+        $this->attributes['is_active'] = filter_var($value, FILTER_VALIDATE_BOOLEAN);
+    }
 }
