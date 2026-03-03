@@ -24,7 +24,8 @@
             {{-- KIRI --}}
             <div class="animate-fade-in-left">
                 <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-center md:text-left">
-                    Halo, saya <span class="text-indigo-400">{{ $profile->name }}</span>
+                    {{-- Pakai nama default jika data kosong --}}
+                    Halo, saya <span class="text-indigo-400">{{ $profile->name ?? 'Shofia Lafarah' }}</span>
                 </h1>
                 <h2 class="text-lg sm:text-xl md:text-2xl font-semibold mb-6 text-center md:text-left">
                     <span class="text-indigo-300" id="typing-text"></span><span class="typing-cursor text-white">|</span>
