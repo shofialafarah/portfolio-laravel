@@ -53,12 +53,12 @@ class SkillController extends Controller
         $extension = $request->file('icon')->getClientOriginalExtension();
         $filename = $this->makeFilename($request->input('name'), $extension);
 
-        if (Storage::disk('public')->exists('skills/' . $filename)) {
+        if (Storage::disk('s3')->exists('skills/' . $filename)) {
             return redirect()->back()
                 ->with('error', 'File icon untuk skill ini sudah ada.');
         }
 
-        $path = $request->file('icon')->storeAs('skills', $filename, 'public');
+        $path = $request->file('icon')->storeAs('skills', $filename, 's3');
 
         Skill::create([
             'name' => $request->name,
@@ -106,8 +106,8 @@ class SkillController extends Controller
 
         if ($request->hasFile('icon')) {
             //Hapus file lama
-            if (Storage::disk('public')->exists($skill->icon)) {
-                Storage::disk('public')->delete($skill->icon);
+            if (Storage::disk('s3')->exists($skill->icon)) {
+                Storage::disk('s3')->delete($skill->icon);
             }
 
 
@@ -116,13 +116,13 @@ class SkillController extends Controller
             $filename = 'logo_' . strtolower(str_replace(' ', '_', $request->input('name'))) . '.' . $extension;
 
             //Cek kalau file sudah ada (hindari overwrite)
-            if (Storage::disk('public')->exists('skills/' . $filename)) {
+            if (Storage::disk('s3')->exists('skills/' . $filename)) {
                 return redirect()->back()
                     ->with('error', 'File icon untuk skill ini sudah ada. Ganti nama skill atau hapus dulu file lama.');
             }
 
             //Simpan file baru dengan nama costum
-            $path = $request->file('icon')->storeAs('skills', $filename, 'public');
+            $path = $request->file('icon')->storeAs('skills', $filename, 's3');
             $skill->icon = $path;
         }
         $skill->save();
@@ -139,8 +139,8 @@ class SkillController extends Controller
         $skill = Skill::findOrFail($id);
 
         //Hapus file icon dari storage
-        if (Storage::disk('public')->exists($skill->icon)) {
-            Storage::disk('public')->delete($skill->icon);
+        if (Storage::disk('s3')->exists($skill->icon)) {
+            Storage::disk('s3')->delete($skill->icon);
         }
 
         $skill->delete();
