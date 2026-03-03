@@ -49,7 +49,7 @@
                                 <tr class="hover:bg-white/[0.02] transition-colors group/row">
                                     <td class="px-6 py-4">
                                         <div class="relative w-24 h-16 rounded-lg overflow-hidden border border-white/10 shadow-lg group-hover/row:border-indigo-500/50 transition-colors">
-                                            <img src="{{ asset('storage/' . $project->image) }}"
+                                            <img src="{{ Storage::disk('s3')->url($project->image) }}" onerror="this.src='https://placehold.co/600x400?text=No+Image'"
                                                 class="w-full h-full object-cover group-hover/row:scale-110 transition-transform duration-500"
                                                 alt="{{ $project->title }}">
                                         </div>

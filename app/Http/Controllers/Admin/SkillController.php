@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Skill;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -105,23 +106,23 @@ class SkillController extends Controller
         $skill->category = $request->category;
 
         if ($request->hasFile('icon')) {
-            //Hapus file lama
-            if (Storage::disk('s3')->exists($skill->icon)) {
+            // 1. Buat nama file baru dulu berdasarkan input name
+            $extension = $request->file('icon')->getClientOriginalExtension();
+            $filename = 'logo_' . strtolower(str_replace(' ', '_', $request->input('name'))) . '.' . $extension;
+            $newPath = 'skills/' . $filename; // Gabungkan folder dan filename
+
+            // 2. Cek apakah file baru ini SUDAH ADA di S3
+            if (Storage::disk('s3')->exists($newPath) && $newPath !== $skill->icon) {
+                return redirect()->back()
+                    ->with('error', 'File icon untuk skill ini sudah ada di storage. Gunakan nama lain atau hapus file manual.');
+            }
+
+            // 3. Hapus file lama jika ada
+            if ($skill->icon && Storage::disk('s3')->exists($skill->icon)) {
                 Storage::disk('s3')->delete($skill->icon);
             }
 
-
-            //Simpan file baru dengan nama costum
-            $extension = $request->file('icon')->getClientOriginalExtension();
-            $filename = 'logo_' . strtolower(str_replace(' ', '_', $request->input('name'))) . '.' . $extension;
-
-            //Cek kalau file sudah ada (hindari overwrite)
-            if (Storage::disk('s3')->exists('skills/' . $filename)) {
-                return redirect()->back()
-                    ->with('error', 'File icon untuk skill ini sudah ada. Ganti nama skill atau hapus dulu file lama.');
-            }
-
-            //Simpan file baru dengan nama costum
+            // 4. Upload file baru
             $path = $request->file('icon')->storeAs('skills', $filename, 's3');
             $skill->icon = $path;
         }

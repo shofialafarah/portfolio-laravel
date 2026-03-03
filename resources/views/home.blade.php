@@ -209,7 +209,7 @@
                         class="relative w-full overflow-hidden rounded-2xl mb-5 
                     {{ $project->category === 'design' ? 'aspect-[4/5]' : 'aspect-video' }} 
                     bg-zinc-900/50 shadow-inner">
-                        <img src="{{ asset('storage/' . $project->image) }}"
+                        <img src="{{ Storage::disk('s3')->url($project->image) }}"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                             alt="{{ $project->title }}">
 

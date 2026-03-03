@@ -53,7 +53,7 @@
                 
                 <div class="flex items-center gap-6 p-4 bg-zinc-900/30 border border-white/5 rounded-2xl">
                     <div class="w-20 h-20 bg-zinc-800 rounded-xl border border-white/10 p-3 flex items-center justify-center overflow-hidden">
-                        <img src="{{ asset('storage/' . $skill->icon) }}" alt="{{ $skill->name }}" class="max-w-full max-h-full object-contain">
+                        <img src="{{ Storage::disk('s3')->url($skill->icon) }}" alt="{{ $skill->name }}" class="max-w-full max-h-full object-contain">
                     </div>
                     <div>
                         <p class="text-xs text-zinc-500 font-medium">Icon Saat Ini</p>
