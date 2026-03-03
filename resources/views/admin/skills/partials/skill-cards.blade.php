@@ -5,7 +5,7 @@
         <div class="flex flex-col items-center gap-4 flex-1">
             <div class="w-16 h-16 flex items-center justify-center bg-zinc-800 rounded-2xl border border-white/5 overflow-hidden p-2 group-hover:scale-110 transition-transform duration-500">
                 @if($skill->icon)
-                    <img src="{{ asset('storage/' . $skill->icon) }}" class="w-full h-full object-contain" alt="{{ $skill->name }}">
+                    <img src="{{ Storage::disk('s3')->url($skill->icon) }}" class="w-full h-full object-contain" alt="{{ $skill->name }}">
                 @else
                     <i class="fa-solid fa-code text-2xl text-zinc-600"></i>
                 @endif
