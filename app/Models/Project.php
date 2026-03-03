@@ -16,4 +16,8 @@ class Project extends Model
         'link_github',
         'tech_stack',
     ];
+    // Tambahkan ini agar Laravel otomatis konversi tipe data
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
 }
