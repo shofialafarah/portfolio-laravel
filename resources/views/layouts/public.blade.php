@@ -7,8 +7,9 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     @php
-        $favicon =
-            isset($profile) && $profile->photo ? asset('storage/' . $profile->photo) : asset('images/profile.jpg');
+        $photoPath = data_get($profile, 'photo');
+
+        $favicon = $photoPath ? asset('storage/' . $photoPath) : asset('images/foto-profil.jpg');
     @endphp
 
     <link rel="icon" type="image/png" href="{{ $favicon }}">
