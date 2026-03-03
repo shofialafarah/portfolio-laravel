@@ -7,7 +7,6 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
@@ -60,7 +59,7 @@ class ProjectController extends Controller
         $project->tech_stack = $request->tech_stack;
 
         // Ini poin krusialnya: Paksa boolean murni
-        $project->is_active = DB::raw('true');
+        $project->is_active = true; 
 
         $project->save();
 

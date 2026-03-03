@@ -38,12 +38,11 @@
     </style>
 
     @php
-        $adminProfile = \App\Models\Profile::first();
-        $favicon =
-            $adminProfile && $adminProfile->photo
-                ? asset('storage/' . $adminProfile->photo)
-                : asset('images/profile.jpg');
+        $photoPath = data_get($profile, 'photo');
+
+        $favicon = $photoPath ? asset('storage/' . $photoPath) : asset('images/foto-profil.jpg');
     @endphp
+
     <link rel="icon" type="image/png" href="{{ $favicon }}">
 </head>
 
