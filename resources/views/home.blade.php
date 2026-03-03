@@ -32,20 +32,22 @@
                 </h2>
 
                 <p class="text-gray-300 leading-relaxed mb-8 text-sm sm:text-base text-center md:text-left">
-                    {{-- {{ $profile->about }} --}}
-                    Saya fresh graduate dari
-                    <span class="text-indigo-300 font-medium">
-                        Universitas Islam Kalimantan Muhammad Arsyad Al-Banjari
-                    </span>
-                    dengan minat utama di bidang desain grafis.
-                    <br><br>
-                    Selama kuliah, saya pernah PKL sebagai
-                    <span class="text-indigo-300 font-medium">Staff Administrasi Intern</span>
-                    di Kementerian Agama (Seksi PHU).
-                    Selain desain, saya juga memiliki dasar pemrograman web menggunakan
-                    Laravel dan Tailwind CSS.
+                    @if (isset($profile->about) && $profile->about)
+                        {{ $profile->about }}
+                    @else
+                        Saya fresh graduate dari
+                        <span class="text-indigo-300 font-medium">
+                            Universitas Islam Kalimantan Muhammad Arsyad Al-Banjari
+                        </span>
+                        dengan minat utama di bidang desain grafis.
+                        <br><br>
+                        Selama kuliah, saya pernah PKL sebagai
+                        <span class="text-indigo-300 font-medium">Staff Administrasi Intern</span>
+                        di Kementerian Agama (Seksi PHU).
+                        Selain desain, saya juga memiliki dasar pemrograman web menggunakan
+                        Laravel dan Tailwind CSS.
+                    @endif
                 </p>
-
                 {{-- BUTTON --}}
                 <div class="flex flex-wrap gap-4 mb-8 justify-center md:justify-start">
                     <a href="{{ asset('cv/CV_Shofia Nabila Elfa Rahma.pdf') }}" download
@@ -83,14 +85,19 @@
             {{-- KANAN --}}
             <div class="flex justify-center md:justify-end animate-fade-in-right">
                 @php
-                    $photo = $profile->photo ? asset('storage/' . $profile->photo) : asset('images/profil.jpg');
+                    // Cara paling aman: Cek apakah property 'photo' ada DAN tidak null
+                    $photoUrl =
+                        isset($profile->photo) && $profile->photo
+                            ? asset('storage/' . $profile->photo)
+                            : asset('images/profil.jpg');
                 @endphp
 
                 <div class="relative">
                     <div
                         class="absolute inset-0 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 rounded-full blur-3xl opacity-40 animate-pulse">
                     </div>
-                    <img src="{{ $photo }}" alt="Foto Profil"
+                    {{-- Gunakan variabel $photoUrl yang sudah kita buat di atas --}}
+                    <img src="{{ $photoUrl }}" alt="Foto Profil"
                         class="relative w-52 h-52 sm:w-64 sm:h-64 md:w-72 md:h-72 rounded-full border-4 border-indigo-500 shadow-2xl shadow-indigo-500/50 object-cover hover:scale-105 transition-transform duration-500">
                 </div>
             </div>
@@ -432,9 +439,10 @@
     {{-- TYPING EFFECT DI HOME --}}
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const texts = @json($headlines);
-
-            if (!texts.length) return;
+            // Ambil data dari Laravel, jika kosong gunakan default array
+            const texts = @json($headlines ?? []);
+            const defaultTexts = ['Graphic Designer', 'Web Developer', 'Fresh Graduate'];
+            const finalTexts = texts.length > 0 ? texts : defaultTexts;
 
             let index = 0;
             let charIndex = 0;
@@ -442,7 +450,7 @@
             const el = document.getElementById('typing-text');
 
             function typeEffect() {
-                const current = texts[index];
+                const current = finalTexts[index];
 
                 el.textContent = isDeleting ?
                     current.substring(0, charIndex--) :
@@ -454,13 +462,29 @@
 
                 if (isDeleting && charIndex === 0) {
                     isDeleting = false;
-                    index = (index + 1) % texts.length;
+                    index = (index + 1) % finalTexts.length;
                 }
 
                 setTimeout(typeEffect, isDeleting ? 60 : 100);
             }
 
             typeEffect();
+        });
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Hapus class active dari semua tombol
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.getAttribute('data-filter');
+                document.querySelectorAll('.project-card').forEach(card => {
+                    if (filter === 'all' || card.classList.contains(filter)) {
+                        card.style.display = 'flex'; // atau 'block' tergantung layout
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
         });
     </script>
     {{-- SCROLL REVEAL ANIMATION --}}
