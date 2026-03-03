@@ -85,11 +85,10 @@
             {{-- KANAN --}}
             <div class="flex justify-center md:justify-end animate-fade-in-right">
                 @php
-                    // Cara paling aman: Cek apakah property 'photo' ada DAN tidak null
-                    $photoUrl =
-                        isset($profile->photo) && $profile->photo
-                            ? asset('storage/' . $profile->photo)
-                            : asset('images/profil.jpg');
+                    $photoUrl = isset($profile->photo) && $profile->photo
+            ? asset('storage/' . $profile->photo)
+            : asset('images/foto-profil.jpg');
+
                 @endphp
 
                 <div class="relative">
