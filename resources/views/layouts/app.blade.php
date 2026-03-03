@@ -7,8 +7,12 @@
     <title>@yield('title') | Portfolio Admin</title>
 
     <!-- 1. Tetap panggil Font dari Google Fonts -->
-    <link href="https://fonts.googleapis.com" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- 2. PANGGIL VITE (Gantikan script CDN Tailwind yang lama) -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -18,8 +22,14 @@
 
     <!-- 4. Style tambahan manual (Opsional) -->
     <style>
-        .transition-all { transition: all 0.3s ease; }
-        .rotate-180 { transform: rotate(180deg); }
+        .transition-all {
+            transition: all 0.3s ease;
+        }
+
+        .rotate-180 {
+            transform: rotate(180deg);
+        }
+
         .menu-sub.active {
             background: rgba(255, 255, 255, 0.15);
             color: #fff !important;
@@ -29,7 +39,8 @@
 
     @php
         $adminProfile = \App\Models\Profile::first();
-        $favicon = $adminProfile && $adminProfile->photo
+        $favicon =
+            $adminProfile && $adminProfile->photo
                 ? asset('storage/' . $adminProfile->photo)
                 : asset('images/profile.jpg');
     @endphp
