@@ -2,55 +2,60 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Skill;
-use App\Models\Profile;
-use App\Models\Headline;
-use App\Models\Project;
-use App\Models\Certification;
-use App\Models\Comment;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Collection;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        // profile
-        $profile = Profile::first();
+        // 1. SETTING API (Ganti ANON_KEY dengan key asli dari Supabase Settings > API)
+        $apiKey = 'sb_publishable_NbcG5ltTWVq8UKEjh_0eOw_sK58koN_'; 
+        $baseUrl = 'https://lezkhnvmfrndjyofxbud.supabase.co/rest/v1';
 
-        // headline untuk animasi teks
-        $headlines = Headline::where('is_active', 1)
-            ->orderBy('order')
-            ->pluck('text');
+        // 2. AMBIL DATA VIA HTTP (Ini bypass port 5432, jadi pasti jalan di Vercel)
+        $headers = [
+            'apikey' => $apiKey,
+            'Authorization' => 'Bearer ' . $apiKey
+        ];
 
-        // projects
-        $projects = Project::where('is_active', 1)
-            ->orderBy('created_at', 'desc')
-            ->get();
+        // Ambil Profile
+        $resProfile = Http::withHeaders($headers)->get($baseUrl . '/profiles?select=*');
+        $profile = $resProfile->successful() ? ($resProfile->json()[0] ?? null) : null;
 
-        // certifications
-        $certifications = Certification::where('is_active', 1)
-            ->orderBy('year', 'desc')
-            ->get();
+        // Ambil Headlines
+        $resHeadlines = Http::withHeaders($headers)->get($baseUrl . '/headlines?is_active=eq.true&order=order.asc');
+        $headlines = collect($resHeadlines->json())->pluck('text');
 
+        // Ambil Projects
+        $resProjects = Http::withHeaders($headers)->get($baseUrl . '/projects?is_active=eq.true&order=created_at.desc');
+        $projects = $resProjects->json();
 
-        // skills publik (dipisah per kategori)
-        $designSkills = Skill::where('category', 'design')->get();
-        $webSkills    = Skill::where('category', 'web')->get();
-        $officeSkills = Skill::where('category', 'office')->get();
+        // Ambil Certifications
+        $resCerts = Http::withHeaders($headers)->get($baseUrl . '/certifications?is_active=eq.true&order=year.desc');
+        $certifications = $resCerts->json();
 
-        $comments = Comment::with(['replies.reactions', 'reactions'])
-            ->whereNull('parent_id')
-            ->latest()
-            ->get();
+        // Ambil Skills
+        $resSkills = Http::withHeaders($headers)->get($baseUrl . '/skills?select=*');
+        $allSkills = collect($resSkills->json());
+        $designSkills = $allSkills->where('category', 'design');
+        $webSkills    = $allSkills->where('category', 'web');
+        $officeSkills = $allSkills->where('category', 'office');
 
-        return view('home', compact(
-            'profile',
-            'headlines',
-            'designSkills',
-            'webSkills',
-            'officeSkills',
-            'projects',
-            'certifications',
-            'comments',
-        ));
+        // Ambil Comments (Simple Version)
+        $resComments = Http::withHeaders($headers)->get($baseUrl . '/comments?parent_id=is.null&order=created_at.desc');
+        $comments = $resComments->json();
+
+        // 3. KIRIM KE VIEW
+        return view('home', [
+            'profile' => (object)$profile, // Cast ke object supaya view tidak error kalau panggil $profile->name
+            'headlines' => $headlines,
+            'designSkills' => $designSkills,
+            'webSkills' => $webSkills,
+            'officeSkills' => $officeSkills,
+            'projects' => $projects,
+            'certifications' => $certifications,
+            'comments' => $comments,
+        ]);
     }
 }

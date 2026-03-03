@@ -14,14 +14,15 @@ use App\Http\Controllers\Admin\MessageController as AdminMessageController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use Illuminate\Support\Facades\DB;
 
-Route::get('/cek-db', function () {
+Route::get('/debug-db', function () {
     try {
         DB::connection()->getPdo();
-        return "Koneksi Berhasil ke Database: " . DB::connection()->getDatabaseName();
+        return "Koneksi Aman, Bos!";
     } catch (\Exception $e) {
-        return "Gagal Koneksi: " . $e->getMessage();
+        return "Gagal karena: " . $e->getMessage();
     }
 });
+
 /*
 |--------------------------------------------------------------------------
 | PUBLIC ROUTES
