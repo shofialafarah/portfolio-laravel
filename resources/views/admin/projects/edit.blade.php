@@ -56,7 +56,7 @@
             {{-- Thumbnail Saat Ini --}}
             <div class="p-4 bg-zinc-900/50 border border-white/5 rounded-2xl flex flex-col items-center">
                 <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] mb-3">Thumbnail Saat Ini</span>
-                <img src="{{ Storage::disk('s3')->url($project->image) }}" class="rounded-lg border border-white/10 max-h-40 shadow-xl">
+                <img src="{{ env('AWS_URL') . $project->image }}" class="rounded-lg border border-white/10 max-h-40 shadow-xl">
             </div>
 
             {{-- SEKSI LINK & TECH (Dinamis Berdasarkan Kategori) --}}
