@@ -28,7 +28,7 @@ class ProjectController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'title' => 'required|string|max:255',
             'category' => 'required|in:web,design',
             'description' => 'required',
@@ -38,20 +38,30 @@ class ProjectController extends Controller
             'tech_stack' => 'nullable|string',
         ]);
 
+        $path = null;
         if ($request->hasFile('image')) {
             $extension = $request->file('image')->getClientOriginalExtension();
-            // Nama file: thumb_timestamp_judul.jpg
             $filename = 'thumb_' . time() . '_' . Str::slug($request->title) . '.' . $extension;
-            
-            // Simpan ke S3 folder 'projects'
+
+            // Simpan ke S3. Laravel akan return string path jika berhasil.
             $path = $request->file('image')->storeAs('projects', $filename, 's3');
-            $validated['image'] = $path;
         }
 
-        // Paksa is_active true agar langsung muncul di landing page
-        $validated['is_active'] = true;
+        // JANGAN pakai Project::create($validated). 
+        // Pakai cara di bawah ini untuk menjamin tipe data ke PostgreSQL.
+        $project = new Project();
+        $project->title = $request->title;
+        $project->category = $request->category;
+        $project->description = $request->description;
+        $project->image = $path;
+        $project->link_deploy = $request->link_deploy;
+        $project->link_github = $request->link_github;
+        $project->tech_stack = $request->tech_stack;
 
-        Project::create($validated);
+        // Ini poin krusialnya: Paksa boolean murni
+        $project->is_active = true;
+
+        $project->save();
 
         return redirect()->route('admin.projects.index', ['category' => $request->category])
             ->with('success', 'Project berhasil ditambahkan ke portfolio!');
@@ -83,7 +93,7 @@ class ProjectController extends Controller
             // 2. Simpan image baru
             $extension = $request->file('image')->getClientOriginalExtension();
             $filename = 'thumb_' . time() . '_' . Str::slug($request->title) . '.' . $extension;
-            
+
             $path = $request->file('image')->storeAs('projects', $filename, 's3');
             $data['image'] = $path;
         }
