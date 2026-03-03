@@ -59,9 +59,10 @@ class ProjectController extends Controller
         $project->tech_stack = $request->tech_stack;
 
         // Ini poin krusialnya: Paksa boolean murni
-        $project->is_active = true;
+        $project->is_active = filter_var(true, FILTER_VALIDATE_BOOLEAN);
 
-        $project->save();
+    $project->save();
+
 
         return redirect()->route('admin.projects.index', ['category' => $request->category])
             ->with('success', 'Project berhasil ditambahkan ke portfolio!');
