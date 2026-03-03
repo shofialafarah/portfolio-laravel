@@ -2,23 +2,16 @@
   "version": 2,
   "outputDirectory": "public",
   "functions": {
-    "api/*.php": {
-      "runtime": "vercel-php@0.6.2"
-    }
+    "api/*.php": { "runtime": "vercel-php@0.6.2" }
   },
   "routes": [
     {
       "src": "/build/(.*)",
-      "headers": { "cache-control": "public, max-age=31536000, immutable" },
       "dest": "/build/$1"
     },
     {
       "src": "/(css|js|images|fonts|cv|storage)/(.*)",
       "dest": "/$1/$2"
-    },
-    {
-      "src": "/favicon.ico",
-      "dest": "/favicon.ico"
     },
     {
       "src": "/(.*)",
