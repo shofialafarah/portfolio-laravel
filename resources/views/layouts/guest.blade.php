@@ -8,7 +8,9 @@
     <title>@yield('title', 'Portfolio shofialafarah')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @php
-        $photoPath = data_get($profile, 'photo');
+        // Ambil data profil langsung dari DB
+        $guestProfile = \App\Models\Profile::first();
+        $photoPath = $guestProfile ? $guestProfile->photo : null;
 
         $favicon = $photoPath ? asset('storage/' . $photoPath) : asset('images/foto-profil.jpg');
     @endphp
@@ -16,7 +18,7 @@
     <link rel="icon" type="image/png" href="{{ $favicon }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="font-sans antialiased">

@@ -38,7 +38,9 @@
     </style>
 
     @php
-        $photoPath = data_get($profile, 'photo');
+        // Ambil data profil langsung dari DB agar tidak error "Undefined variable $profile"
+        $adminProfile = \App\Models\Profile::first();
+        $photoPath = $adminProfile ? $adminProfile->photo : null;
 
         $favicon = $photoPath ? asset('storage/' . $photoPath) : asset('images/foto-profil.jpg');
     @endphp
