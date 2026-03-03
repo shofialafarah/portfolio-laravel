@@ -2,37 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Skill;
-use App\Models\Project;
-use App\Models\Profile;
-use App\Models\Certification;
-use App\Models\Headline;
-// Jika kamu punya model Comment, import juga di sini
-// use App\Models\Comment; 
-
 class HomeController extends Controller
 {
     public function index()
     {
-        // Ambil Profile
-        $profile = Profile::first();
+        $profile = \App\Models\Profile::first();
 
-        // PERBAIKAN DI SINI: Gunakan true (tanpa kutip) 
-        // PostgreSQL butuh boolean murni, bukan integer 1
-        $headlines = Headline::where('is_active', '=', true)
+        $headlines = \App\Models\Headline::whereRaw('is_active = true')
             ->orderBy('order', 'asc')
             ->pluck('text');
 
-        $projects = Project::where('is_active', '=', true)
+        $projects = \App\Models\Project::whereRaw('is_active = true')
             ->orderBy('created_at', 'desc')
             ->get();
 
-        $certifications = Certification::where('is_active', '=', true)
+        $certifications = \App\Models\Certification::whereRaw('is_active = true')
             ->orderBy('year', 'desc')
             ->get();
 
-        // Skills tidak pakai filter is_active jadi aman
-        $allSkills = Skill::all();
+        $allSkills = \App\Models\Skill::all();
         $designSkills = $allSkills->where('category', 'design');
         $webSkills    = $allSkills->where('category', 'web');
         $officeSkills = $allSkills->where('category', 'office');
