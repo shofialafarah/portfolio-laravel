@@ -10,15 +10,15 @@
     {
       "src": "/build/(.*)",
       "headers": { "cache-control": "public, max-age=31536000, immutable" },
-      "dest": "/public/build/$1"
+      "dest": "/build/$1"
     },
     {
       "src": "/(css|js|images|fonts|cv|storage)/(.*)",
-      "dest": "/public/$1/$2"
+      "dest": "/$1/$2"
     },
     {
       "src": "/favicon.ico",
-      "dest": "/public/favicon.ico"
+      "dest": "/favicon.ico"
     },
     {
       "src": "/(.*)",
