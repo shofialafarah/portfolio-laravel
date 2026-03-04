@@ -30,14 +30,16 @@ class ProfileController extends Controller
         $profile = Profile::first();
 
         $request->validate([
-            'name'  => 'required|string|max:255',
-            'about' => 'nullable|string',
-            'photo' => 'nullable|image|max:2048',
+            'name'    => 'required|string|max:255',
+            'about'   => 'nullable|string',
+            'photo'   => 'nullable|image|max:2048',
+            'cv_file' => 'nullable|mimes:pdf|max:2048', // Validasi khusus PDF
         ]);
 
         $profile->name  = $request->name;
         $profile->about = $request->about;
 
+        // --- LOGIKA UPLOAD FOTO ---
         if ($request->hasFile('photo')) {
             if ($profile->photo && Storage::disk('s3')->exists($profile->photo)) {
                 Storage::disk('s3')->delete($profile->photo);
@@ -45,8 +47,20 @@ class ProfileController extends Controller
             $profile->photo = $request->file('photo')->store('profile', 's3');
         }
 
+        // --- LOGIKA UPLOAD CV ---
+        if ($request->hasFile('cv_file')) {
+            // Hapus file CV lama dari S3 jika ada
+            if ($profile->cv_path && Storage::disk('s3')->exists($profile->cv_path)) {
+                Storage::disk('s3')->delete($profile->cv_path);
+            }
+
+            // Simpan file baru ke folder 'cv' di disk S3
+            $path = $request->file('cv_file')->store('cv', 's3');
+            $profile->cv_path = $path;
+        }
+
         $profile->save();
-        return redirect()->back()->with('success', 'Profile berhasil diperbarui');
+        return redirect()->back()->with('success', 'Profile & CV berhasil diperbarui');
     }
 
     // --- LOGIKA HEADLINE ---
@@ -92,17 +106,17 @@ class ProfileController extends Controller
     }
 
     public function headlineReorder(Request $request)
-{
-    $ids = $request->ids;
+    {
+        $ids = $request->ids;
 
-    if ($ids) {
-        foreach ($ids as $index => $id) {
-            // Kita update posisi 'order' berdasarkan urutan array yang dikirim JS
-            \App\Models\Headline::where('id', $id)->update(['order' => $index + 1]);
+        if ($ids) {
+            foreach ($ids as $index => $id) {
+                // Kita update posisi 'order' berdasarkan urutan array yang dikirim JS
+                \App\Models\Headline::where('id', $id)->update(['order' => $index + 1]);
+            }
+            return response()->json(['message' => 'Urutan berhasil diperbarui!'], 200);
         }
-        return response()->json(['message' => 'Urutan berhasil diperbarui!'], 200);
-    }
 
-    return response()->json(['message' => 'Gagal memperbarui urutan.'], 400);
-}
+        return response()->json(['message' => 'Gagal memperbarui urutan.'], 400);
+    }
 }

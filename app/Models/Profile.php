@@ -10,6 +10,7 @@ class Profile extends Model
         'name',
         'about',
         'photo',
+        'cv_path',
         'instagram',
         'linkedin',
         'github',

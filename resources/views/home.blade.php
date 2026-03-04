@@ -32,7 +32,7 @@
                 </h2>
 
                 <p
-                    class="text-gray-300 leading-relaxed mb-8 text-sm sm:text-base text-center md:text-left whitespace-pre-line">
+                    class="text-gray-300 leading-relaxed mb-8 text-sm sm:text-base text-center md:text-left whitespace-pre-line indent-8">
                     @if (isset($profile->about) && $profile->about)
                         {{ $profile->about }}
                     @else
@@ -50,11 +50,20 @@
                 </p>
                 {{-- BUTTON --}}
                 <div class="flex flex-wrap gap-4 mb-8 justify-center md:justify-start">
-                    <a href="{{ asset('cv/CV_Shofia Nabila Elfa Rahma.pdf') }}" download
+                    @php
+                        $cvUrl =
+                            isset($profile->cv_path) && $profile->cv_path
+                                ? Storage::disk('s3')->url($profile->cv_path)
+                                : asset('cv/CV_Shofia Nabila Elfa Rahma.pdf');
+                    @endphp
+
+                    {{-- Tombol CV --}}
+                    <a href="{{ $cvUrl }}" target="_blank"
                         class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 transition-all duration-300 rounded-lg font-semibold hover:shadow-lg hover:scale-100">
-                        Download CV
+                        Lihat CV
                     </a>
 
+                    {{-- Tombol Project --}}
                     <a href="#projects"
                         class="px-6 py-3 border border-indigo-500 text-indigo-300 hover:bg-indigo-600 hover:text-white transition-all duration-300 rounded-lg hover:scale-105">
                         Lihat Project

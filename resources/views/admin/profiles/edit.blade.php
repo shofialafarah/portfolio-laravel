@@ -71,6 +71,36 @@
                         </div>
                     </div>
                 </div>
+
+                {{-- FILE CV --}}
+                <div class="mt-6">
+                    <label class="block text-sm font-semibold text-zinc-400 mb-2">Upload CV (PDF)</label>
+                    <div class="flex flex-col gap-4">
+                        @if ($profile->cv_path)
+                            <div class="flex items-center gap-3 bg-indigo-500/5 border border-indigo-500/20 p-3 rounded-xl">
+                                <svg class="w-8 h-8 text-indigo-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z">
+                                    </path>
+                                </svg>
+                                <div class="flex-1 overflow-hidden">
+                                    <p class="text-xs text-zinc-500 truncate">CV Saat Ini:</p>
+                                    <a href="{{ Storage::disk('s3')->url($profile->cv_path) }}" target="_blank"
+                                        class="text-sm text-indigo-400 hover:underline font-medium">
+                                        Lihat Preview CV
+                                    </a>
+                                </div>
+                            </div>
+                        @endif
+
+                        <div class="flex-1">
+                            <input type="file" name="cv_file" accept=".pdf"
+                                class="block w-full text-sm text-zinc-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-indigo-500/10 file:text-indigo-400 hover:file:bg-indigo-500/20 transition-all cursor-pointer">
+                            <p class="mt-2 text-xs text-zinc-600 italic">*Format: PDF saja. Maks 2MB.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="mt-10 pt-6 border-t border-white/5 flex justify-end">
