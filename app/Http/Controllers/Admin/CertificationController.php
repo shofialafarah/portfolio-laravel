@@ -41,13 +41,13 @@ class CertificationController extends Controller
         $path = $request->file('image')->storeAs('certifications', $filename, 's3');
 
         // === SAVE MANUALLY (SAFE FOR POSTGRESQL) ===
-        $cert = new Certification();
-        $cert->title = $request->title;
-        $cert->issuer = $request->issuer;
-        $cert->year = $request->year;
-        $cert->image = $path;
-        $cert->is_active = true; // Paksa boolean murni
-        $cert->save();
+        $certification = new Certification();
+        $certification->title = $request->title;
+        $certification->issuer = $request->issuer;
+        $certification->year = $request->year;
+        $certification->image = $path;
+        $certification->is_active = true; // Paksa boolean murni
+        $certification->save();
 
         return redirect()
             ->route('admin.certifications.index')
@@ -100,7 +100,7 @@ class CertificationController extends Controller
         if ($certification->image && Storage::disk('s3')->exists($certification->image)) {
             Storage::disk('s3')->delete($certification->image);
         }
-        
+
         $certification->delete();
         return back()->with('success', 'Sertifikat berhasil dihapus');
     }

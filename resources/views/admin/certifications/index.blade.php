@@ -28,40 +28,39 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-white/5">
-                        @foreach ($certifications as $cert)
+                        @foreach ($certifications as $certification)
                             <tr class="hover:bg-white/[0.02] transition-colors">
                                 <td class="px-6 py-4">
                                     <img src="{{ rtrim(config('filesystems.disks.s3.url'), '/') . '/' . ltrim($certification->image, '/') }}"
-                                        class="w-full h-full object-cover"
                                         onerror="this.src='https://placehold.co/600x400?text=Sertifikat'"
                                         class="w-20 h-14 object-contain rounded border border-white/10 bg-zinc-800">
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex flex-col">
-                                        <span class="text-white font-bold">{{ $cert->title }}</span>
-                                        <span class="text-zinc-500 text-sm">{{ $cert->issuer }}</span>
+                                        <span class="text-white font-bold">{{ $certification->title }}</span>
+                                        <span class="text-zinc-500 text-sm">{{ $certification->issuer }}</span>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 text-zinc-300">{{ $cert->year }}</td>
+                                <td class="px-6 py-4 text-zinc-300">{{ $certification->year }}</td>
                                 <td class="px-6 py-4">
                                     <span
-                                        class="px-3 py-1 {{ $cert->is_active ? 'bg-emerald-500/10 text-emerald-500' : 'bg-zinc-800 text-zinc-500' }} text-[10px] font-bold uppercase rounded-full border border-white/5">
-                                        {{ $cert->is_active ? 'Aktif' : 'Nonaktif' }}
+                                        class="px-3 py-1 {{ $certification->is_active ? 'bg-emerald-500/10 text-emerald-500' : 'bg-zinc-800 text-zinc-500' }} text-[10px] font-bold uppercase rounded-full border border-white/5">
+                                        {{ $certification->is_active ? 'Aktif' : 'Nonaktif' }}
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 text-center">
                                     <div class="flex justify-center gap-3">
-                                        <a href="{{ route('admin.certifications.edit', $cert) }}"
+                                        <a href="{{ route('admin.certifications.edit', $certification) }}"
                                             class="w-9 h-9 flex items-center justify-center rounded-lg bg-zinc-800 text-zinc-400 hover:text-yellow-500 border border-white/5">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </a>
-                                        <button onclick="confirmDelete({{ $cert->id }})"
+                                        <button onclick="confirmDelete({{ $certification->id }})"
                                             class="w-9 h-9 flex items-center justify-center rounded-lg bg-zinc-800 text-zinc-400 hover:text-red-500 border border-white/5">
                                             <i class="fa-solid fa-trash-can"></i>
                                         </button>
-                                        <form id="delete-form-{{ $cert->id }}"
-                                            action="{{ route('admin.certifications.destroy', $cert) }}" method="POST"
-                                            class="hidden">
+                                        <form id="delete-form-{{ $certification->id }}"
+                                            action="{{ route('admin.certifications.destroy', $certification) }}"
+                                            method="POST" class="hidden">
                                             @csrf @method('DELETE')
                                         </form>
                                     </div>
