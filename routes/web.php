@@ -4,14 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\MessageController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Admin\ProjectController;
-use App\Http\Controllers\Admin\HeadlineController;
 use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\Admin\CertificationController;
 use App\Http\Controllers\Admin\MessageController as AdminMessageController;
-use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
+use App\Http\Controllers\Admin\ProfileController;
 use Illuminate\Support\Facades\DB;
 
 Route::get('/debug-db', function () {
@@ -48,13 +46,6 @@ Route::post('/message', [MessageController::class, 'store'])->name('message.stor
 Route::get('/dashboard', function () {
     return redirect()->route('admin.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
 /*
 |--------------------------------------------------------------------------
 | ADMIN PANEL (Manual Routes)
@@ -70,16 +61,16 @@ Route::middleware('auth')
             return view('admin.dashboard');
         })->name('dashboard');
 
-        // === ADMIN PROFILE ===
-        Route::get('/profile', [AdminProfileController::class, 'edit'])->name('profile.edit');
-        Route::post('/profile', [AdminProfileController::class, 'update'])->name('profile.update');
+        // === PROFILES (Biodata) ===
+        Route::get('/profiles/edit', [ProfileController::class, 'edit'])->name('profiles.edit');
+        Route::post('/profiles/edit', [ProfileController::class, 'update'])->name('profiles.update');
 
-        // === HEADLINES (Manual) ===
-        Route::get('/headlines', [HeadlineController::class, 'index'])->name('headlines.index');
-        Route::post('/headlines', [HeadlineController::class, 'store'])->name('headlines.store');
-        Route::put('/headlines/{headline}', [HeadlineController::class, 'update'])->name('headlines.update');
-        Route::delete('/headlines/{headline}', [HeadlineController::class, 'destroy'])->name('headlines.destroy');
-        Route::post('/headlines/reorder', [HeadlineController::class, 'reorder'])->name('headlines.reorder');
+        // === PROFILES (Headline) ===
+        Route::get('/profiles/headlines', [ProfileController::class, 'headlineIndex'])->name('profiles.headline');
+        Route::post('/profiles/headlines', [ProfileController::class, 'headlineStore'])->name('profiles.store');
+        Route::put('/profiles/headlines/{headline}', [ProfileController::class, 'headlineUpdate'])->name('profiles.headline.update');
+        Route::delete('/profiles/headlines/{headline}', [ProfileController::class, 'headlineDestroy'])->name('profiles.destroy');
+        Route::post('/profiles/headlines/reorder', [ProfileController::class, 'headlineReorder'])->name('profiles.reorder');
 
         // === SKILLS (Manual) ===
         Route::get('/skills', [SkillController::class, 'index'])->name('skills.index');

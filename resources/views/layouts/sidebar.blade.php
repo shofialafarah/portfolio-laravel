@@ -19,9 +19,9 @@
         </a>
 
         {{-- Profile Dropdown (Alpine.js) --}}
-        <div x-data="{ open: {{ request()->routeIs('admin.profile.*') || request()->routeIs('admin.headlines.*') ? 'true' : 'false' }} }">
+        <div x-data="{ open: {{ request()->routeIs('admin.profiles.*') ? 'true' : 'false' }} }">
             <button @click="open = !open"
-                class="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all {{ request()->routeIs('admin.profile.*') || request()->routeIs('admin.headlines.*') ? 'bg-white/5 text-white' : 'text-zinc-400 hover:bg-white/5 hover:text-white' }}">
+                class="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all {{ request()->routeIs('admin.profiles.*') ? 'bg-white/5 text-white' : 'text-zinc-400 hover:bg-white/5 hover:text-white' }}">
                 <div class="flex items-center gap-3">
                     <i class="fa-solid fa-user-astronaut text-sm"></i>
                     <span class="font-medium">Profile</span>
@@ -31,12 +31,12 @@
             </button>
 
             <div x-show="open" x-cloak x-transition class="mt-2 ml-4 border-l border-white/10 space-y-1">
-                <a href="{{ route('admin.profile.edit') }}"
-                    class="block px-6 py-2 text-sm transition-colors {{ request()->routeIs('admin.profile.edit') ? 'text-indigo-400 font-semibold' : 'text-zinc-500 hover:text-zinc-200' }}">
+                <a href="{{ route('admin.profiles.edit') }}"
+                    class="block px-6 py-2 text-sm transition-colors {{ request()->routeIs('admin.profiles.edit') ? 'text-indigo-400 font-semibold' : 'text-zinc-500 hover:text-zinc-200' }}">
                     Biodata
                 </a>
-                <a href="{{ route('admin.headlines.index') }}"
-                    class="block px-6 py-2 text-sm transition-colors {{ request()->routeIs('admin.headlines.index') ? 'text-indigo-400 font-semibold' : 'text-zinc-500 hover:text-zinc-200' }}">
+                <a href="{{ route('admin.profiles.headline') }}"
+                    class="block px-6 py-2 text-sm transition-colors {{ request()->routeIs('admin.profiles.headline') ? 'text-indigo-400 font-semibold' : 'text-zinc-500 hover:text-zinc-200' }}">
                     Headline
                 </a>
             </div>
