@@ -3,19 +3,22 @@
 @section('content')
     <div class="max-w-3xl mx-auto">
         <div class="flex items-center gap-8 mb-8 border-b border-white/5">
-            <a href="{{ route('admin.profile.edit') }}"
-                class="pb-4 text-sm font-bold transition-all relative {{ request()->routeIs('admin.profile.edit') ? 'text-indigo-400' : 'text-zinc-500 hover:text-zinc-300' }}">
+            {{-- Link ke Biodata --}}
+            <a href="{{ route('admin.profiles.edit') }}"
+                class="pb-4 text-sm font-bold transition-all relative {{ request()->routeIs('admin.profiles.edit') ? 'text-indigo-400' : 'text-zinc-500 hover:text-zinc-300' }}">
                 Biodata Profil
-                @if (request()->routeIs('admin.profile.edit'))
+                @if (request()->routeIs('admin.profiles.edit'))
                     <div
                         class="absolute bottom-0 left-0 w-full h-0.5 bg-indigo-500 shadow-[0_-4px_10px_rgba(79,70,229,0.5)]">
                     </div>
                 @endif
             </a>
-            <a href="{{ route('admin.headlines.index') }}"
-                class="pb-4 text-sm font-bold transition-all relative {{ request()->routeIs('admin.headlines.index') ? 'text-indigo-400' : 'text-zinc-500 hover:text-zinc-300' }}">
+
+            {{-- Link ke Headline --}}
+            <a href="{{ route('admin.profiles.headline') }}"
+                class="pb-4 text-sm font-bold transition-all relative {{ request()->routeIs('admin.profiles.headline') ? 'text-indigo-400' : 'text-zinc-500 hover:text-zinc-300' }}">
                 Headline Text
-                @if (request()->routeIs('admin.headlines.index'))
+                @if (request()->routeIs('admin.profiles.headline'))
                     <div
                         class="absolute bottom-0 left-0 w-full h-0.5 bg-indigo-500 shadow-[0_-4px_10px_rgba(79,70,229,0.5)]">
                     </div>
@@ -27,7 +30,7 @@
             <p class="text-zinc-400 mt-1">Perbarui informasi dasar profil Anda.</p>
         </div>
 
-        <form method="POST" action="{{ route('admin.profile.update') }}" enctype="multipart/form-data"
+        <form method="POST" action="{{ route('admin.profiles.update') }}" enctype="multipart/form-data"
             class="bg-[#18181b] border border-white/5 rounded-2xl p-6 md:p-8 shadow-xl">
             @csrf
 

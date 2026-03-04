@@ -92,10 +92,17 @@ class ProfileController extends Controller
     }
 
     public function headlineReorder(Request $request)
-    {
-        foreach ($request->ids as $index => $id) {
-            Headline::where('id', $id)->update(['order' => $index + 1]);
+{
+    $ids = $request->ids;
+
+    if ($ids) {
+        foreach ($ids as $index => $id) {
+            // Kita update posisi 'order' berdasarkan urutan array yang dikirim JS
+            \App\Models\Headline::where('id', $id)->update(['order' => $index + 1]);
         }
-        return response()->json(['success' => true]);
+        return response()->json(['message' => 'Urutan berhasil diperbarui!'], 200);
     }
+
+    return response()->json(['message' => 'Gagal memperbarui urutan.'], 400);
+}
 }
