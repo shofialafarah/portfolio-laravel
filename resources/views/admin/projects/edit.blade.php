@@ -65,7 +65,7 @@
                 <div class="p-4 bg-zinc-900/50 border border-white/5 rounded-2xl flex flex-col items-center">
                     <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em] mb-3">Thumbnail Saat
                         Ini</span>
-                    <img src="{{ config('filesystems.disks.s3.url') . '/' . $project->image }}"
+                    <img src="{{ rtrim(config('filesystems.disks.s3.url'), '/') . '/' . ltrim($project->image, '/') }}"
                         class="rounded-lg border border-white/10 max-h-40 shadow-xl">
                 </div>
 
