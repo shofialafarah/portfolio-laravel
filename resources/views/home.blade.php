@@ -31,7 +31,8 @@
                     <span class="text-indigo-300" id="typing-text"></span><span class="typing-cursor text-white">|</span>
                 </h2>
 
-                <p class="text-gray-300 leading-relaxed mb-8 text-sm sm:text-base text-center md:text-left">
+                <p
+                    class="text-gray-300 leading-relaxed mb-8 text-sm sm:text-base text-center md:text-left whitespace-pre-line">
                     @if (isset($profile->about) && $profile->about)
                         {{ $profile->about }}
                     @else
@@ -44,8 +45,7 @@
                         Selama kuliah, saya pernah PKL sebagai
                         <span class="text-indigo-300 font-medium">Staff Administrasi Intern</span>
                         di Kementerian Agama (Seksi PHU).
-                        Selain desain, saya juga memiliki dasar pemrograman web menggunakan
-                        Laravel dan Tailwind CSS.
+                        Selain desain, saya juga memiliki dasar pemrograman web menggunakan Laravel dan Tailwind CSS.
                     @endif
                 </p>
                 {{-- BUTTON --}}
