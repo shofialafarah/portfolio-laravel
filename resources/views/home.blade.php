@@ -27,12 +27,11 @@
                     {{-- Pakai nama default jika data kosong --}}
                     Halo, saya <span class="text-indigo-400">{{ $profile->name ?? 'Shofia Lafarah' }}</span>
                 </h1>
-                <h2 class="text-lg sm:text-xl md:text-2xl font-semibold mb-6 text-center md:text-left">
+                <h2 class="text-lg sm:text-xl md:text-2xl font-semibold mb-3 text-center md:text-left">
                     <span class="text-indigo-300" id="typing-text"></span><span class="typing-cursor text-white">|</span>
                 </h2>
 
-                <p
-                    class="text-gray-300 leading-relaxed mb-8 text-sm sm:text-base text-center md:text-left whitespace-pre-line indent-8">
+                <p class="text-gray-300 leading-relaxed mb-8 text-sm sm:text-base whitespace-pre-line indent-8 text-justify">
                     @if (isset($profile->about) && $profile->about)
                         {{ $profile->about }}
                     @else
