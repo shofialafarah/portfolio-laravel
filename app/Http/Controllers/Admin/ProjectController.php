@@ -59,7 +59,7 @@ class ProjectController extends Controller
         $project->tech_stack = $request->tech_stack;
 
         // Ini poin krusialnya: Paksa boolean murni
-        $project->is_active = true; 
+        $project->is_active = true;
 
         $project->save();
 
@@ -75,7 +75,7 @@ class ProjectController extends Controller
 
     public function update(Request $request, Project $project)
     {
-        $data = $request->validate([
+        $request->validate([
             'title' => 'required|string|max:255',
             'category' => 'required|in:web,design',
             'description' => 'required',
@@ -86,7 +86,7 @@ class ProjectController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            // 1. Hapus image lama dari S3
+            // 1. Hapus image lama jika ada
             if ($project->image && Storage::disk('s3')->exists($project->image)) {
                 Storage::disk('s3')->delete($project->image);
             }
@@ -94,12 +94,20 @@ class ProjectController extends Controller
             // 2. Simpan image baru
             $extension = $request->file('image')->getClientOriginalExtension();
             $filename = 'thumb_' . time() . '_' . Str::slug($request->title) . '.' . $extension;
-
             $path = $request->file('image')->storeAs('projects', $filename, 's3');
-            $data['image'] = $path;
+            $project->image = $path;
         }
 
-        $project->update($data);
+        // 3. Update field lainnya secara manual (Lebih aman untuk PostgreSQL)
+        $project->title = $request->title;
+        $project->category = $request->category;
+        $project->description = $request->description;
+        $project->link_deploy = $request->link_deploy;
+        $project->link_github = $request->link_github;
+        $project->tech_stack = $request->tech_stack;
+        $project->is_active = true; // Menjamin tipe data boolean
+
+        $project->save();
 
         return redirect()
             ->route('admin.projects.index', ['category' => $project->category])
