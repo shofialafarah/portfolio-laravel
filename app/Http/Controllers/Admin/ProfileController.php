@@ -54,7 +54,7 @@ class ProfileController extends Controller
     public function headlineIndex()
     {
         $headlines = Headline::orderBy('order')->get();
-        return view('admin.profiles.headlines', compact('headlines'));
+        return view('admin.profiles.headline', compact('headlines'));
     }
 
     public function headlineStore(Request $request)
