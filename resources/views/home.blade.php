@@ -295,12 +295,13 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                 @foreach ($certifications as $certification)
                     <div class="card-inner rounded-2xl p-5 group hover:-translate-y-2 transition-all duration-300">
-
                         <!-- FRAME SERTIFIKAT -->
                         <div
                             class="w-full aspect-[4/3] bg-zinc-900/50 rounded-xl 
                                 flex items-center justify-center overflow-hidden mb-4">
-                            <img src="{{ asset('storage/' . $certification->image) }}" alt="{{ $certification->title }}"
+                            <img src="{{ rtrim(config('filesystems.disks.s3.url'), '/') . '/' . ltrim($certification->image, '/') }}"
+                                alt="{{ $certification->title }}"
+                                onerror="this.src='https://placehold.co/600x400?text=Sertifikat+{{ urlencode($certification->title) }}'"
                                 class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500">
                         </div>
                         <div class="border border-white rounded-lg p-2 mb-2">
@@ -309,8 +310,6 @@
                                 {{ $certification->title }}
                             </h3>
                         </div>
-
-
                         <p class="text-xs text-gray-400 mt-2 text-center">
                             {{ $certification->issuer }} | {{ $certification->year }}
                         </p>
@@ -329,7 +328,6 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-
             {{-- ================= CARD HUBUNGI SAYA ================= --}}
             <div
                 class="card-glass rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl border border-white/10 relative overflow-hidden">
