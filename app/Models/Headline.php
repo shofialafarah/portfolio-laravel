@@ -11,4 +11,10 @@ class Headline extends Model
         'is_active',
         'order',
     ];
+
+    // Tambahkan ini untuk mengatasi error PostgreSQL tadi
+    protected $casts = [
+        'is_active' => 'boolean',
+        'order' => 'integer',
+    ];
 }
