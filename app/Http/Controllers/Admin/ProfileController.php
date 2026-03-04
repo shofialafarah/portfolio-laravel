@@ -60,7 +60,7 @@ class ProfileController extends Controller
         }
 
         $profile->save();
-        return redirect()->back()->with('success', 'Profile & CV berhasil diperbarui');
+        return redirect()->back()->with('success', 'Profile berhasil diperbarui');
     }
 
     // --- LOGIKA HEADLINE ---

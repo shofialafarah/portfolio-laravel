@@ -17,4 +17,9 @@ class Headline extends Model
         'is_active' => 'boolean',
         'order' => 'integer',
     ];
+
+    public function setIsActiveAttribute($value)
+    {
+        $this->attributes['is_active'] = filter_var($value, FILTER_VALIDATE_BOOLEAN) ? 'true' : 'false';
+    }
 }
