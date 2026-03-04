@@ -42,7 +42,7 @@
                 <div class="space-y-3">
                     <span class="block text-sm font-bold text-zinc-400 uppercase tracking-widest">Sertifikat Saat Ini</span>
                     <div class="p-2 bg-zinc-900 border border-white/5 rounded-2xl flex justify-center overflow-hidden h-36">
-                        <img src="{{ asset('storage/' . $certification->image) }}" class="h-full object-contain rounded-lg">
+                        <img src="{{ rtrim(config('filesystems.disks.s3.url'), '/') . '/' . ltrim($certification->image, '/') }}" class="h-full object-contain rounded-lg">
                     </div>
                 </div>
                 <div>

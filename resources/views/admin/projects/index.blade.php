@@ -31,34 +31,40 @@
                         <thead>
                             <tr class="bg-white/5 border-b border-white/10">
                                 <th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-zinc-500">Preview</th>
-                                <th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-zinc-500">Info Project</th>
+                                <th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-zinc-500">Info Project
+                                </th>
 
                                 {{-- KOLOM TECH STACK (Hanya muncul jika tab Web) --}}
                                 @if ($category == 'web')
-                                    <th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-zinc-500">Tech Stack</th>
+                                    <th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-zinc-500">Tech
+                                        Stack</th>
                                 @endif
 
                                 {{-- KOLOM LINKS (Muncul di Web & Desain sekarang) --}}
                                 <th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-zinc-500">Links</th>
 
-                                <th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-zinc-500 text-center">Aksi</th>
+                                <th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-zinc-500 text-center">
+                                    Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-white/5">
                             @forelse ($projects as $project)
                                 <tr class="hover:bg-white/[0.02] transition-colors group/row">
                                     <td class="px-6 py-4">
-                                        <div class="relative w-24 h-16 rounded-lg overflow-hidden border border-white/10 shadow-lg group-hover/row:border-indigo-500/50 transition-colors">
-                                            <img src="{{ rtrim(config('filesystems.disks.s3.url'), '/') . '/' . ltrim($project->image, '/') }}" 
-     onerror="this.src='https://placehold.co/600x400?text=No+Image'"
-     class="w-full h-full object-cover group-hover/row:scale-110 transition-transform duration-500"
-     alt="{{ $project->title }}">
+                                        <div
+                                            class="relative w-24 h-16 rounded-lg overflow-hidden border border-white/10 shadow-lg group-hover/row:border-indigo-500/50 transition-colors">
+                                            <img src="{{ rtrim(config('filesystems.disks.s3.url'), '/') . '/' . ltrim($project->image, '/') }}"
+                                                onerror="this.src='https://placehold.co/600x400?text=No+Image'"
+                                                class="w-full h-full object-cover group-hover/row:scale-110 transition-transform duration-500"
+                                                alt="{{ $project->title }}">
                                         </div>
                                     </td>
                                     <td class="px-6 py-4">
                                         <div class="flex flex-col">
-                                            <span class="text-white font-bold group-hover/row:text-indigo-400 transition-colors">{{ $project->title ?? '-' }}</span>
-                                            <span class="text-zinc-500 text-sm line-clamp-1 mt-1">{{ Str::limit($project->description, 50) ?? '-' }}</span>
+                                            <span
+                                                class="text-white font-bold group-hover/row:text-indigo-400 transition-colors">{{ $project->title ?? '-' }}</span>
+                                            <span
+                                                class="text-zinc-500 text-sm line-clamp-1 mt-1">{{ Str::limit($project->description, 50) ?? '-' }}</span>
                                         </div>
                                     </td>
 
@@ -66,9 +72,10 @@
                                     @if ($category == 'web')
                                         <td class="px-6 py-4">
                                             <div class="flex flex-wrap gap-1">
-                                                @if($project->tech_stack)
+                                                @if ($project->tech_stack)
                                                     @foreach (explode(',', $project->tech_stack) as $tech)
-                                                        <span class="text-[10px] bg-indigo-500/10 text-indigo-400 px-2 py-0.5 rounded border border-indigo-500/20">{{ trim($tech) }}</span>
+                                                        <span
+                                                            class="text-[10px] bg-indigo-500/10 text-indigo-400 px-2 py-0.5 rounded border border-indigo-500/20">{{ trim($tech) }}</span>
                                                     @endforeach
                                                 @else
                                                     <span class="text-zinc-600 text-[10px]">-</span>
@@ -82,15 +89,21 @@
                                         <div class="flex gap-3 items-center">
                                             @if ($project->category == 'web')
                                                 @if ($project->link_github)
-                                                    <a href="{{ $project->link_github }}" target="_blank" class="text-zinc-500 hover:text-white transition-colors" title="GitHub"><i class="fa-brands fa-github text-lg"></i></a>
+                                                    <a href="{{ $project->link_github }}" target="_blank"
+                                                        class="text-zinc-500 hover:text-white transition-colors"
+                                                        title="GitHub"><i class="fa-brands fa-github text-lg"></i></a>
                                                 @endif
                                                 @if ($project->link_deploy)
-                                                    <a href="{{ $project->link_deploy }}" target="_blank" class="text-zinc-500 hover:text-indigo-400 transition-colors" title="Live Preview"><i class="fa-solid fa-rocket text-base"></i></a>
+                                                    <a href="{{ $project->link_deploy }}" target="_blank"
+                                                        class="text-zinc-500 hover:text-indigo-400 transition-colors"
+                                                        title="Live Preview"><i
+                                                            class="fa-solid fa-rocket text-base"></i></a>
                                                 @endif
                                             @else
                                                 {{-- Tampilan Link untuk Desain --}}
                                                 @if ($project->link_deploy)
-                                                    <a href="{{ $project->link_deploy }}" target="_blank" class="flex items-center gap-2 text-zinc-500 hover:text-blue-400 transition-colors">
+                                                    <a href="{{ $project->link_deploy }}" target="_blank"
+                                                        class="flex items-center gap-2 text-zinc-500 hover:text-blue-400 transition-colors">
                                                         <i class="fa-brands fa-behance text-lg"></i>
                                                         <span class="text-xs font-medium">Behance</span>
                                                     </a>

@@ -23,36 +23,35 @@ class CertificationController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $request->validate([
             'title'     => 'required|string|max:255',
             'issuer'    => 'nullable|string|max:255',
             'year'      => 'nullable|digits:4',
             'image'     => 'required|image|max:2048',
-            'is_active' => 'boolean',
         ]);
 
         // === BUILD FILE NAME ===
         $title  = Str::slug($request->title);
-        $issuer = $request->issuer
-            ? Str::slug($request->issuer)
-            : 'unknown';
+        $issuer = $request->issuer ? Str::slug($request->issuer) : 'unknown';
         $year   = $request->year ?? 'year';
-
         $extension = $request->file('image')->getClientOriginalExtension();
+        $filename = "{$title}_{$issuer}_{$year}_" . time() . ".{$extension}";
 
-        $filename = "{$title}_{$issuer}_{$year}.{$extension}";
+        // === STORE TO S3 (SUPABASE) ===
+        $path = $request->file('image')->storeAs('certifications', $filename, 's3');
 
-        // === STORE IMAGE ===
-        $path = $request->file('image')
-            ->storeAs('certifications', $filename, 'public');
-
-        $data['image'] = $path;
-
-        Certification::create($data);
+        // === SAVE MANUALLY (SAFE FOR POSTGRESQL) ===
+        $cert = new Certification();
+        $cert->title = $request->title;
+        $cert->issuer = $request->issuer;
+        $cert->year = $request->year;
+        $cert->image = $path;
+        $cert->is_active = true; // Paksa boolean murni
+        $cert->save();
 
         return redirect()
             ->route('admin.certifications.index')
-            ->with('success', 'Sertifikat berhasil ditambahkan');
+            ->with('success', 'Sertifikat berhasil ditambahkan ke cloud!');
     }
 
     public function edit(Certification $certification)
@@ -62,34 +61,34 @@ class CertificationController extends Controller
 
     public function update(Request $request, Certification $certification)
     {
-        $data = $request->validate([
+        $request->validate([
             'title'     => 'required|string|max:255',
             'issuer'    => 'nullable|string|max:255',
             'year'      => 'nullable|digits:4',
             'image'     => 'nullable|image|max:2048',
-            'is_active' => 'boolean',
         ]);
 
         if ($request->hasFile('image')) {
-
-            // hapus file lama
-            Storage::disk('public')->delete($certification->image);
+            // Hapus file lama dari S3
+            if ($certification->image && Storage::disk('s3')->exists($certification->image)) {
+                Storage::disk('s3')->delete($certification->image);
+            }
 
             $title  = Str::slug($request->title);
-            $issuer = $request->issuer
-                ? Str::slug($request->issuer)
-                : 'unknown';
+            $issuer = $request->issuer ? Str::slug($request->issuer) : 'unknown';
             $year   = $request->year ?? 'year';
-
             $extension = $request->file('image')->getClientOriginalExtension();
+            $filename = "{$title}_{$issuer}_{$year}_" . time() . ".{$extension}";
 
-            $filename = "{$title}_{$issuer}_{$year}.{$extension}";
-
-            $data['image'] = $request->file('image')
-                ->storeAs('certifications', $filename, 'public');
+            $path = $request->file('image')->storeAs('certifications', $filename, 's3');
+            $certification->image = $path;
         }
 
-        $certification->update($data);
+        $certification->title = $request->title;
+        $certification->issuer = $request->issuer;
+        $certification->year = $request->year;
+        $certification->is_active = $request->has('is_active') ? true : false;
+        $certification->save();
 
         return redirect()
             ->route('admin.certifications.index')
@@ -98,9 +97,11 @@ class CertificationController extends Controller
 
     public function destroy(Certification $certification)
     {
-        Storage::disk('public')->delete($certification->image);
+        if ($certification->image && Storage::disk('s3')->exists($certification->image)) {
+            Storage::disk('s3')->delete($certification->image);
+        }
+        
         $certification->delete();
-
         return back()->with('success', 'Sertifikat berhasil dihapus');
     }
 }
