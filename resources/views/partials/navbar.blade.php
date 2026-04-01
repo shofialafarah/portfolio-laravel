@@ -26,7 +26,7 @@
                     <a href="#certifications" class="text-gray-300 hover:text-white transition">
                         Certifications
                     </a>
-                    <a href="#comments" class="text-gray-300 hover:text-white transition">
+                    <a href="#contact" class="text-gray-300 hover:text-white transition">
                         Contact
                     </a>
                 </div>

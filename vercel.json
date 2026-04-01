@@ -4,6 +4,15 @@
   "functions": {
     "api/*.php": { "runtime": "vercel-php@0.6.2" }
   },
+  "env": {
+    "APP_CONFIG_CACHE": "/tmp/config.php",
+    "APP_EVENTS_CACHE": "/tmp/events.php",
+    "APP_PACKAGES_CACHE": "/tmp/packages.php",
+    "APP_ROUTES_CACHE": "/tmp/routes.php",
+    "VIEW_COMPILED_PATH": "/tmp",
+    "CACHE_STORE": "database",
+    "SESSION_DRIVER": "database"
+  },
   "routes": [
     {
       "src": "/build/(.*)",

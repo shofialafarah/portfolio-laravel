@@ -29,7 +29,8 @@
                 <ul class="space-y-2 text-sm text-gray-400">
                     <li><a href="#skills" class="hover:text-indigo-400 transition duration-300">Skills</a></li>
                     <li><a href="#projects" class="hover:text-indigo-400 transition duration-300">Projects</a></li>
-                    <li><a href="#comments" class="hover:text-indigo-400 transition duration-300">Comments</a></li>
+                    <li><a href="#certifications" class="hover:text-indigo-400 transition duration-300">Certifications</a></li>
+                    <li><a href="#contact" class="hover:text-indigo-400 transition duration-300">Contact</a></li>
                 </ul>
             </div>
 
