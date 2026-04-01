@@ -21,9 +21,9 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<body class="font-sans antialiased">
-    <div class="min-h-screen w-full flex flex-col justify-center items-center bg-zinc-950">
-        <div class="w-full h-full flex items-center justify-center">
+<body class="font-sans antialiased text-zinc-300">
+    <div class="min-h-screen w-full flex flex-col justify-center items-center bg-zinc-950 px-6">
+        <div class="w-full max-w-md">
             {{ $slot }}
         </div>
     </div>

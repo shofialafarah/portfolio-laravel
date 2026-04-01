@@ -1,7 +1,7 @@
 <nav class="sticky top-4 z-50 px-4">
     <div
         class="max-w-7xl mx-auto px-4 sm:px-6 py-3
-               bg-zinc-900/60 border-white/10 text-white
+               bg-zinc-900/60 text-white
                border border-white/30
                rounded-2xl shadow-lg">
 
