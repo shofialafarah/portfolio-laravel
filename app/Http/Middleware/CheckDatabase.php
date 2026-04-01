@@ -19,12 +19,10 @@ class CheckDatabase
         try {
             DB::connection()->getPdo();
         } catch (\Exception $e) {
-            // Cek apakah ini IP kamu
-            if ($request->ip() === 'ISI_DENGAN_IP_KAMU_DISINI') {
+            if ($request->ip() === '39.194.2.127') {
                 return $next($request);
             }
 
-            // Orang lain langsung ke halaman cantik
             return response()->view('errors.503', [], 503);
         }
 

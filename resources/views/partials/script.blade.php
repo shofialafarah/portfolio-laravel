@@ -1,34 +1,3 @@
-@extends('layouts.public')
-
-@section('title', 'Shofia Lafarah\'s Portfolio')
-
-@section('content')
-
-    {{-- ================= PAGE LOADER ================= --}}
-    <div class="page-loader">
-        <div class="loader-content">
-            <div class="loader-spinner"></div>
-            <div class="loader-text">MEMUAT</div>
-        </div>
-    </div>
-
-    {{-- ================= GRID BACKGROUND ================= --}}
-    <div class="grid-background">
-        <div class="grid-layer"></div>
-    </div>
-
-    @include('partials.home')
-
-    @include('partials.skills')
-
-    @include('partials.projects')
-
-    @include('partials.certifications')
-
-    @include('partials.contact')
-
-@endsection
-
 @section('scripts')
     {{-- TYPING EFFECT DI HOME --}}
     <script>
@@ -63,7 +32,10 @@
 
             typeEffect();
         });
+    </script>
 
+    {{-- FILTER PROJECT --}}
+    <script>
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -90,15 +62,13 @@
                         entry.target.classList.add('revealed');
                     }
                 });
-            }, {
-                threshold: 0.1
-            });
+            }, { threshold: 0.1 });
 
             document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
         });
     </script>
 
-    {{-- MESSAGE FORM --}}
+    {{-- FORM PESAN --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.getElementById('messageForm').addEventListener('submit', async function(e) {
