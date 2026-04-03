@@ -4,23 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    @php
+        $adminProfile = \App\Models\Profile::first();
+        $photoPath = $adminProfile ? $adminProfile->photo : null;
+
+        $favicon = $photoPath ? asset('storage/' . $photoPath) : asset('images/foto-profil.jpg');
+    @endphp
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://portfolio-laravel-shofialafarah.vercel.app/">
+    <meta property="og:title" content="shofialafarah">
+    <meta property="og:description" content="Portfolio Shofia Nabila Elfa Rahma">
+    <meta property="og:image" content="{{ $favicon }}">
+
     <title>@yield('title') | Portfolio Admin</title>
 
-    <!-- 1. Tetap panggil Font dari Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap"
         rel="stylesheet">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- 2. PANGGIL VITE (Gantikan script CDN Tailwind yang lama) -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- 3. Alpine.js (Tetap biarkan jika kamu pakai) -->
     <script defer src="https://cdn.jsdelivr.net"></script>
 
-    <!-- 4. Style tambahan manual (Opsional) -->
     <style>
         .transition-all {
             transition: all 0.3s ease;
@@ -36,14 +45,6 @@
             border-radius: 8px;
         }
     </style>
-
-    @php
-        // Ambil data profil langsung dari DB agar tidak error "Undefined variable $profile"
-        $adminProfile = \App\Models\Profile::first();
-        $photoPath = $adminProfile ? $adminProfile->photo : null;
-
-        $favicon = $photoPath ? asset('storage/' . $photoPath) : asset('images/foto-profil.jpg');
-    @endphp
 
     <link rel="icon" type="image/png" href="{{ $favicon }}">
 </head>
