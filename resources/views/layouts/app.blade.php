@@ -13,10 +13,14 @@
     @endphp
 
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://portfolio-laravel-shofialafarah.vercel.app/">
-    <meta property="og:title" content="shofialafarah">
-    <meta property="og:description" content="Portfolio Shofia Nabila Elfa Rahma">
-    <meta property="og:image" content="{{ $favicon }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="Shofia Lafarah Portfolio">
+    <meta property="og:description" content="Portfolio Shofia Nabila Elfa Rahma - Web Developer & Graphic Designer">
+    <meta property="og:image" content="{{ asset('images/foto-profil.jpg') }}">
+    <meta property="og:image:secure_url" content="{{ asset('images/foto-profil.jpg') }}">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
 
     <title>@yield('title') | Portfolio Admin</title>
 
