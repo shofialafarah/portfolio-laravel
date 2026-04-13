@@ -47,6 +47,9 @@
                                 class="text-red-500">*</span></label>
                         <input type="number" name="year" value="{{ old('year', date('Y')) }}" required
                             class="w-full bg-zinc-900/50 border border-white/10 text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-emerald-500 outline-none transition-all">
+                        @error('year')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
 
@@ -66,6 +69,9 @@
 
                 <label
                     class="flex items-center gap-3 p-4 bg-zinc-900/30 border border-white/5 rounded-2xl cursor-pointer hover:bg-zinc-900/50 transition-all">
+                    <!-- Supaya kalau gak dicentang tetap terkirim angka 0 -->
+                    <input type="hidden" name="is_active" value="0">
+
                     <input type="checkbox" name="is_active" value="1" checked
                         class="w-5 h-5 rounded border-zinc-700 bg-zinc-800 text-emerald-500 focus:ring-emerald-500">
                     <span class="text-sm font-bold text-zinc-300 uppercase tracking-wider">Tampilkan di Website</span>
@@ -87,8 +93,14 @@
 
     <script>
         document.getElementById('cert-image').addEventListener('change', function(e) {
-            document.getElementById('file-name').textContent = e.target.files[0] ? e.target.files[0].name :
-                "Klik untuk upload JPG/PNG";
+            const fileName = e.target.files[0] ? e.target.files[0].name : "Klik untuk upload JPG/PNG";
+            const labelText = document.getElementById('file-name');
+
+            labelText.textContent = fileName;
+
+            if (e.target.files[0]) {
+                labelText.classList.add('text-emerald-400'); // Beri warna hijau kalau ada file
+            }
         });
     </script>
 @endsection

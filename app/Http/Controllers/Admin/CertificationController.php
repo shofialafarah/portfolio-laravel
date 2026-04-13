@@ -28,6 +28,7 @@ class CertificationController extends Controller
             'issuer'    => 'nullable|string|max:255',
             'year'      => 'nullable|digits:4',
             'image'     => 'required|image|max:2048',
+            'is_active' => 'nullable',
         ]);
 
         // === BUILD FILE NAME ===
@@ -46,7 +47,8 @@ class CertificationController extends Controller
         $certification->issuer = $request->issuer;
         $certification->year = $request->year;
         $certification->image = $path;
-        $certification->is_active = true; // Paksa boolean murni
+        // Ambil dari input, jika tidak ada (tidak dicentang) maka false
+        $certification->is_active = $request->has('is_active');
         $certification->save();
 
         return redirect()
@@ -66,22 +68,23 @@ class CertificationController extends Controller
             'issuer'    => 'nullable|string|max:255',
             'year'      => 'nullable|digits:4',
             'image'     => 'nullable|image|max:2048',
+            'is_active' => 'nullable',
         ]);
 
         if ($request->hasFile('image')) {
             // Hapus file lama dari S3
-            if ($certification->image && Storage::disk('s3')->exists($certification->image)) {
-                Storage::disk('s3')->delete($certification->image);
+            try {
+                if ($certification->image && Storage::disk('s3')->exists($certification->image)) {
+                    Storage::disk('s3')->delete($certification->image);
+                }
+
+                $extension = $request->file('image')->getClientOriginalExtension();
+                $filename = Str::slug($request->title) . "_" . time() . ".{$extension}";
+                $path = $request->file('image')->storeAs('certifications', $filename, 's3');
+                $certification->image = $path;
+            } catch (\Exception $e) {
+                return back()->with('error', 'Gagal upload ke S3: ' . $e->getMessage());
             }
-
-            $title  = Str::slug($request->title);
-            $issuer = $request->issuer ? Str::slug($request->issuer) : 'unknown';
-            $year   = $request->year ?? 'year';
-            $extension = $request->file('image')->getClientOriginalExtension();
-            $filename = "{$title}_{$issuer}_{$year}_" . time() . ".{$extension}";
-
-            $path = $request->file('image')->storeAs('certifications', $filename, 's3');
-            $certification->image = $path;
         }
 
         $certification->title = $request->title;

@@ -68,10 +68,13 @@
                 </div>
 
                 <label class="flex items-center gap-3 p-4 bg-zinc-900/30 border border-white/5 rounded-2xl cursor-pointer">
+                    <input type="hidden" name="is_active" value="0">
+
                     <input type="checkbox" name="is_active" value="1" {{ $certification->is_active ? 'checked' : '' }}
                         class="w-5 h-5 rounded border-zinc-700 bg-zinc-800 text-emerald-500 focus:ring-emerald-500">
                     <span class="text-sm font-bold text-zinc-300 uppercase tracking-wider">Tampilkan di Website</span>
                 </label>
+
 
                 <div class="flex gap-4 pt-4">
                     <button type="submit"
