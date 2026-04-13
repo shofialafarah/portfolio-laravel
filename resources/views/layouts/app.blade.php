@@ -12,6 +12,14 @@
         $favicon = $photoPath ? asset('storage/' . $photoPath) : asset('images/foto-profil.jpg');
     @endphp
 
+    <!-- SEO Meta Tags -->
+    <title>Shofia Lafarah | Web Developer & Graphic Designer</title>
+    <meta name="description"
+        content="Portfolio Shofia Nabila Elfa Rahma. Membangun solusi web modern dengan Laravel dan desain grafis kreatif.">
+    <meta name="keywords"
+        content="Shofia Nabila Elfa Rahma, Shofia Lafarah, Web Developer, Graphic Designer, Laravel Portfolio">
+    <meta name="author" content="Shofia Nabila Elfa Rahma">
+
     <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
