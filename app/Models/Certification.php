@@ -25,6 +25,6 @@ class Certification extends Model
      */
     public function setIsActiveAttribute($value)
     {
-        $this->attributes['is_active'] = filter_var($value, FILTER_VALIDATE_BOOLEAN) ? true : false;
+        $this->attributes['is_active'] = filter_var($value, FILTER_VALIDATE_BOOLEAN) ? 'true' : 'false';
     }
 }

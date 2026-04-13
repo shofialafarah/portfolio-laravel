@@ -16,7 +16,7 @@ class HomeController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        $certifications = \App\Models\Certification::whereRaw('is_active IS TRUE')
+        $certifications = \App\Models\Certification::whereRaw('is_active = true')
             ->orderBy('year', 'desc')
             ->get();
 
