@@ -48,7 +48,7 @@ class CertificationController extends Controller
         $certification->year = $request->year;
         $certification->image = $path;
         // Ambil dari input, jika tidak ada (tidak dicentang) maka false
-        $certification->is_active = $request->has('is_active');
+        $certification->is_active = $request->boolean('is_active');
         $certification->save();
 
         return redirect()
@@ -90,7 +90,7 @@ class CertificationController extends Controller
         $certification->title = $request->title;
         $certification->issuer = $request->issuer;
         $certification->year = $request->year;
-        $certification->is_active = $request->has('is_active') ? true : false;
+        $certification->is_active = $request->boolean('is_active');
         $certification->save();
 
         return redirect()

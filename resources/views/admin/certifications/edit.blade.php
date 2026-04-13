@@ -92,9 +92,14 @@
 
     <script>
         document.getElementById('cert-image').addEventListener('change', function(e) {
-            document.getElementById('file-name').textContent = e.target.files[0] ? e.target.files[0].name :
-                "Klik untuk ganti";
-            document.getElementById('file-name').classList.add('text-emerald-400');
+            const fileName = e.target.files[0] ? e.target.files[0].name : "Klik untuk upload JPG/PNG";
+            const labelText = document.getElementById('file-name');
+
+            labelText.textContent = fileName;
+
+            if (e.target.files[0]) {
+                labelText.classList.add('text-emerald-400'); // Beri warna hijau kalau ada file
+            }
         });
     </script>
 @endsection
