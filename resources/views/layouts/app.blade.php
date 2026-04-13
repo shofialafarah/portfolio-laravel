@@ -12,31 +12,6 @@
         $favicon = $photoPath ? asset('storage/' . $photoPath) : asset('images/foto-profil.jpg');
     @endphp
 
-    <!-- SEO Meta Tags -->
-    <title>Shofia Lafarah | Web Developer & Graphic Designer</title>
-    <meta name="description"
-        content="Portfolio Shofia Nabila Elfa Rahma. Membangun solusi web modern dengan Laravel dan desain grafis kreatif.">
-    <meta name="keywords"
-        content="Shofia Nabila Elfa Rahma, Shofia Lafarah, Web Developer, Graphic Designer, Shofia's Portfolio">
-    <meta name="author" content="Shofia Nabila Elfa Rahma">
-
-    <meta name="google-site-verification" content="r70oh3Ydsemhdi1vNyO83gX8ZNewiS8tPlC4IHQ5AgE" />
-    <!-- Open Graph / Facebook / WhatsApp -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:title" content="Shofia Lafarah Portfolio">
-    <meta property="og:description" content="Portfolio Shofia Nabila Elfa Rahma - Web Developer & Graphic Designer">
-    <meta property="og:image" content="{{ asset('images/saya.jpg') }}">
-
-    <!-- Twitter / X (Ini yang diminta Vercel di gambar kamu) -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="{{ url()->current() }}">
-    <meta name="twitter:title" content="Shofia Lafarah Portfolio">
-    <meta name="twitter:description" content="Portfolio Shofia Nabila Elfa Rahma - Web Developer & Graphic Designer">
-    <meta name="twitter:image" content="{{ asset('images/saya.jpg') }}">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-
     <title>@yield('title') | Portfolio Admin</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
