@@ -17,9 +17,10 @@
     <meta name="description"
         content="Portfolio Shofia Nabila Elfa Rahma. Membangun solusi web modern dengan Laravel dan desain grafis kreatif.">
     <meta name="keywords"
-        content="Shofia Nabila Elfa Rahma, Shofia Lafarah, Web Developer, Graphic Designer, Laravel Portfolio">
+        content="Shofia Nabila Elfa Rahma, Shofia Lafarah, Web Developer, Graphic Designer, Shofia's Portfolio">
     <meta name="author" content="Shofia Nabila Elfa Rahma">
 
+    <meta name="google-site-verification" content="r70oh3Ydsemhdi1vNyO83gX8ZNewiS8tPlC4IHQ5AgE" />
     <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
