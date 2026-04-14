@@ -12,13 +12,24 @@
         $favicon = $photoPath ? asset('storage/' . $photoPath) : asset('images/foto-profil.jpg');
     @endphp
 
-<!-- SEO Meta Tags -->
+    <!-- SEO Meta Tags -->
     <title>Shofia Lafarah | Web Developer & Graphic Designer</title>
     <meta name="description"
         content="Portfolio Shofia Nabila Elfa Rahma. Membangun solusi web modern dengan Laravel dan desain grafis kreatif.">
     <meta name="keywords"
         content="Shofia Nabila Elfa Rahma, Shofia Lafarah, Web Developer, Graphic Designer, Shofia's Portfolio">
     <meta name="author" content="Shofia Nabila Elfa Rahma">
+
+    <meta property="og:site_name" content="Portfolio Shofia Nabila Elfa Rahma">
+    <!-- Schema Markup  -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Portfolio Shofia Nabila Elfa Rahma",
+            "url": "https://portfolio-laravel-shofialafarah.vercel.app"
+        }
+    </script>
 
     <meta name="google-site-verification" content="r70oh3Ydsemhdi1vNyO83gX8ZNewiS8tPlC4IHQ5AgE" />
     <!-- Open Graph / Facebook / WhatsApp -->
@@ -28,7 +39,7 @@
     <meta property="og:description" content="Portfolio Shofia Nabila Elfa Rahma - Web Developer & Graphic Designer">
     <meta property="og:image" content="{{ asset('images/saya.jpg') }}">
 
-    <!-- Twitter / X (Ini yang diminta Vercel di gambar kamu) -->
+    <!-- Twitter / X  -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="{{ url()->current() }}">
     <meta name="twitter:title" content="Shofia Lafarah Portfolio">
@@ -36,19 +47,16 @@
     <meta name="twitter:image" content="{{ asset('images/saya.jpg') }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    
-    <link rel="icon" type="image/png" href="{{ $favicon }}">
+
+    <link rel="icon" type="image/png" href="{{ asset('images/foto-profil.jpg') }}">
     <style>
-        /* 1. Keadaan awal: Elemen tidak terlihat dan agak turun ke bawah */
         .scroll-reveal {
             opacity: 0;
             transform: translateY(30px);
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             visibility: hidden;
-            /* Mencegah elemen ter-klik sebelum muncul */
         }
 
-        /* 2. Keadaan setelah kena sensor JS (Class 'revealed' ditambahkan) */
         .scroll-reveal.revealed {
             opacity: 1;
             transform: translateY(0);
