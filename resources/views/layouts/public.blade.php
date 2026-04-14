@@ -24,8 +24,8 @@
     <!-- Schema Markup  -->
     <script type="application/ld+json">
         {
-            "@context": "https://schema.org",
-            "@type": "WebSite",
+            "@@context": "https://schema.org",
+            "@@type": "WebSite",
             "name": "Portfolio Shofia Nabila Elfa Rahma",
             "url": "https://portfolio-laravel-shofialafarah.vercel.app"
         }
