@@ -122,11 +122,54 @@
         </div>
     </div>
 
-    <script>
-        document.getElementById('image').addEventListener('change', function(e) {
-            if (e.target.files[0]) {
-                document.getElementById('file-name').textContent = e.target.files[0].name;
-                document.getElementById('file-name').classList.add('text-indigo-400');
+    {{-- Library Kompresi Gambar --}}
+    <script src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.mjs" type="module"></script>
+
+    <script type="module">
+        import imageCompression from 'https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.mjs';
+
+        const imageInput = document.getElementById('image');
+        const fileNameSpan = document.getElementById('file-name');
+
+        imageInput.addEventListener('change', async function(e) {
+            const file = e.target.files[0];
+            
+            if (!file) {
+                fileNameSpan.textContent = "Pilih Gambar Baru";
+                fileNameSpan.classList.remove('text-indigo-400');
+                return;
+            }
+
+            // Tampilkan status kompresi
+            fileNameSpan.textContent = `Mengoptimalkan: ${file.name}...`;
+            fileNameSpan.classList.add('text-indigo-400');
+
+            // Konfigurasi kompresi (max 2MB, max dimensi 1920px)
+            const options = {
+                maxSizeMB: 2,
+                maxWidthOrHeight: 1920,
+                useWebWorker: true
+            };
+
+            try {
+                // Kompresi di browser
+                const compressedFile = await imageCompression(file, options);
+
+                // Masukkan file terkompresi kembali ke input file
+                const dataTransfer = new DataTransfer();
+                const newFile = new File([compressedFile], file.name, {
+                    type: compressedFile.type,
+                    lastModified: Date.now()
+                });
+                dataTransfer.items.add(newFile);
+                imageInput.files = dataTransfer.files;
+
+                // Tampilkan nama file dan ukuran baru
+                const sizeMB = (compressedFile.size / 1024 / 1024).toFixed(2);
+                fileNameSpan.textContent = `${file.name} (${sizeMB} MB)`;
+            } catch (error) {
+                console.error('Gagal mengompresi gambar:', error);
+                fileNameSpan.textContent = file.name;
             }
         });
     </script>

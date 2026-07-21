@@ -57,7 +57,7 @@
             {{-- SEKSI LINK (Dinamis: Muncul di Web & Desain) --}}
             <div class="space-y-6 pt-4 border-t border-white/5">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {{-- Link Utama (Bisa Link Deploy atau Link Behance) --}}
+                    {{-- Link Utama --}}
                     <div class="md:col-span-1">
                         <label class="block text-sm font-bold text-zinc-400 uppercase tracking-widest mb-2" 
                                x-text="category === 'web' ? 'Link Deploy / Demo' : 'Link Behance / Portfolio'"></label>
@@ -65,7 +65,7 @@
                             class="w-full bg-zinc-900/50 border border-white/10 text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 outline-none transition-all">
                     </div>
 
-                    {{-- Link GitHub (Hanya muncul jika Web) --}}
+                    {{-- Link GitHub --}}
                     <div x-show="category === 'web'" x-transition>
                         <label class="block text-sm font-bold text-zinc-400 uppercase tracking-widest mb-2">Link GitHub</label>
                         <input type="url" name="link_github" value="{{ old('link_github') }}" placeholder="https://github.com/..." 
@@ -73,7 +73,7 @@
                     </div>
                 </div>
 
-                {{-- Tech Stack (Hanya muncul jika Web) --}}
+                {{-- Tech Stack --}}
                 <div x-show="category === 'web'" x-transition>
                     <label class="block text-sm font-bold text-zinc-400 uppercase tracking-widest mb-2">Tech Stack (Pisahkan dengan koma)</label>
                     <input type="text" name="tech_stack" value="{{ old('tech_stack') }}" placeholder="Laravel, Tailwind CSS, AlpineJS" 
@@ -100,9 +100,53 @@
     </div>
 </div>
 
-<script>
-    document.getElementById('image').addEventListener('change', function(e) {
-        document.getElementById('file-name').textContent = e.target.files[0] ? e.target.files[0].name : "Pilih Gambar";
+{{-- Library Kompresi Gambar --}}
+<script src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.mjs" type="module"></script>
+
+<script type="module">
+    import imageCompression from 'https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.mjs';
+
+    const imageInput = document.getElementById('image');
+    const fileNameSpan = document.getElementById('file-name');
+
+    imageInput.addEventListener('change', async function(e) {
+        const file = e.target.files[0];
+        
+        if (!file) {
+            fileNameSpan.textContent = "Pilih Gambar";
+            return;
+        }
+
+        // Tampilkan nama file & status mengompres
+        fileNameSpan.textContent = `Mengoptimalkan: ${file.name}...`;
+
+        // Opsi Kompresi (Maksimal 2MB, Max Lebar/Tinggi 1920px)
+        const options = {
+            maxSizeMB: 2,
+            maxWidthOrHeight: 1920,
+            useWebWorker: true
+        };
+
+        try {
+            // Kompresi dilakukan langsung di browser user
+            const compressedFile = await imageCompression(file, options);
+
+            // Masukkan kembali file hasil kompresi ke input file
+            const dataTransfer = new DataTransfer();
+            const newFile = new File([compressedFile], file.name, {
+                type: compressedFile.type,
+                lastModified: Date.now()
+            });
+            dataTransfer.items.add(newFile);
+            imageInput.files = dataTransfer.files;
+
+            // Update teks label nama file
+            const sizeMB = (compressedFile.size / 1024 / 1024).toFixed(2);
+            fileNameSpan.textContent = `${file.name} (${sizeMB} MB)`;
+        } catch (error) {
+            console.error('Gagal mengompresi gambar:', error);
+            fileNameSpan.textContent = file.name;
+        }
     });
 </script>
 
