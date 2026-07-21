@@ -108,30 +108,33 @@
 
     const imageInput = document.getElementById('image');
     const fileNameSpan = document.getElementById('file-name');
+    const submitBtn = document.querySelector('button[type="submit"]');
 
     imageInput.addEventListener('change', async function(e) {
         const file = e.target.files[0];
         
         if (!file) {
-            fileNameSpan.textContent = "Pilih Gambar";
+            fileNameSpan.textContent = "Pilih Gambar Baru";
+            fileNameSpan.classList.remove('text-indigo-400', 'text-amber-400');
             return;
         }
 
-        // Tampilkan nama file & status mengompres
-        fileNameSpan.textContent = `Mengoptimalkan: ${file.name}...`;
+        // Disable tombol submit sementara & beri indikator loading
+        submitBtn.disabled = true;
+        submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        fileNameSpan.textContent = `Mengompres: ${file.name}... Mohon tunggu`;
+        fileNameSpan.classList.add('text-amber-400');
 
-        // Opsi Kompresi (Maksimal 2MB, Max Lebar/Tinggi 1920px)
+        // Target aman untuk Vercel (Max 1MB, Max resolusi 1600px)
         const options = {
-            maxSizeMB: 2,
-            maxWidthOrHeight: 1920,
+            maxSizeMB: 1,
+            maxWidthOrHeight: 1600,
             useWebWorker: true
         };
 
         try {
-            // Kompresi dilakukan langsung di browser user
             const compressedFile = await imageCompression(file, options);
 
-            // Masukkan kembali file hasil kompresi ke input file
             const dataTransfer = new DataTransfer();
             const newFile = new File([compressedFile], file.name, {
                 type: compressedFile.type,
@@ -140,12 +143,17 @@
             dataTransfer.items.add(newFile);
             imageInput.files = dataTransfer.files;
 
-            // Update teks label nama file
             const sizeMB = (compressedFile.size / 1024 / 1024).toFixed(2);
-            fileNameSpan.textContent = `${file.name} (${sizeMB} MB)`;
+            fileNameSpan.textContent = `Siap! ${file.name} (${sizeMB} MB)`;
+            fileNameSpan.classList.remove('text-amber-400');
+            fileNameSpan.classList.add('text-indigo-400');
         } catch (error) {
             console.error('Gagal mengompresi gambar:', error);
             fileNameSpan.textContent = file.name;
+        } finally {
+            // Aktifkan kembali tombol submit setelah selesai kompresi
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
         }
     });
 </script>

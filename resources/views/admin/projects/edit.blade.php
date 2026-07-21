@@ -126,53 +126,59 @@
     <script src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.mjs" type="module"></script>
 
     <script type="module">
-        import imageCompression from 'https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.mjs';
+    import imageCompression from 'https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.mjs';
 
-        const imageInput = document.getElementById('image');
-        const fileNameSpan = document.getElementById('file-name');
+    const imageInput = document.getElementById('image');
+    const fileNameSpan = document.getElementById('file-name');
+    const submitBtn = document.querySelector('button[type="submit"]');
 
-        imageInput.addEventListener('change', async function(e) {
-            const file = e.target.files[0];
-            
-            if (!file) {
-                fileNameSpan.textContent = "Pilih Gambar Baru";
-                fileNameSpan.classList.remove('text-indigo-400');
-                return;
-            }
+    imageInput.addEventListener('change', async function(e) {
+        const file = e.target.files[0];
+        
+        if (!file) {
+            fileNameSpan.textContent = "Pilih Gambar Baru";
+            fileNameSpan.classList.remove('text-indigo-400', 'text-amber-400');
+            return;
+        }
 
-            // Tampilkan status kompresi
-            fileNameSpan.textContent = `Mengoptimalkan: ${file.name}...`;
+        // Disable tombol submit sementara & beri indikator loading
+        submitBtn.disabled = true;
+        submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        fileNameSpan.textContent = `Mengompres: ${file.name}... Mohon tunggu`;
+        fileNameSpan.classList.add('text-amber-400');
+
+        // Target aman untuk Vercel (Max 1MB, Max resolusi 1600px)
+        const options = {
+            maxSizeMB: 1,
+            maxWidthOrHeight: 1600,
+            useWebWorker: true
+        };
+
+        try {
+            const compressedFile = await imageCompression(file, options);
+
+            const dataTransfer = new DataTransfer();
+            const newFile = new File([compressedFile], file.name, {
+                type: compressedFile.type,
+                lastModified: Date.now()
+            });
+            dataTransfer.items.add(newFile);
+            imageInput.files = dataTransfer.files;
+
+            const sizeMB = (compressedFile.size / 1024 / 1024).toFixed(2);
+            fileNameSpan.textContent = `Siap! ${file.name} (${sizeMB} MB)`;
+            fileNameSpan.classList.remove('text-amber-400');
             fileNameSpan.classList.add('text-indigo-400');
-
-            // Konfigurasi kompresi (max 2MB, max dimensi 1920px)
-            const options = {
-                maxSizeMB: 2,
-                maxWidthOrHeight: 1920,
-                useWebWorker: true
-            };
-
-            try {
-                // Kompresi di browser
-                const compressedFile = await imageCompression(file, options);
-
-                // Masukkan file terkompresi kembali ke input file
-                const dataTransfer = new DataTransfer();
-                const newFile = new File([compressedFile], file.name, {
-                    type: compressedFile.type,
-                    lastModified: Date.now()
-                });
-                dataTransfer.items.add(newFile);
-                imageInput.files = dataTransfer.files;
-
-                // Tampilkan nama file dan ukuran baru
-                const sizeMB = (compressedFile.size / 1024 / 1024).toFixed(2);
-                fileNameSpan.textContent = `${file.name} (${sizeMB} MB)`;
-            } catch (error) {
-                console.error('Gagal mengompresi gambar:', error);
-                fileNameSpan.textContent = file.name;
-            }
-        });
-    </script>
+        } catch (error) {
+            console.error('Gagal mengompresi gambar:', error);
+            fileNameSpan.textContent = file.name;
+        } finally {
+            // Aktifkan kembali tombol submit setelah selesai kompresi
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+    });
+</script>
 
     <style>
         [x-cloak] {
