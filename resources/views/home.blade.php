@@ -30,6 +30,27 @@
 @endsection
 
 @section('scripts')
+    {{-- SCRIPT HILANGKAN PAGE LOADER --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loader = document.querySelector('.page-loader');
+            if (loader) {
+                loader.style.transition = 'opacity 0.4s ease';
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 400);
+            }
+        });
+
+        window.addEventListener('load', () => {
+            const loader = document.querySelector('.page-loader');
+            if (loader) {
+                loader.style.display = 'none';
+            }
+        });
+    </script>
+
     {{-- TYPING EFFECT DI HOME --}}
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -43,6 +64,7 @@
             const el = document.getElementById('typing-text');
 
             function typeEffect() {
+                if (!el) return;
                 const current = finalTexts[index];
 
                 el.textContent = isDeleting ?
@@ -101,67 +123,70 @@
     {{-- MESSAGE FORM --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        document.getElementById('messageForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
+        const messageForm = document.getElementById('messageForm');
+        if (messageForm) {
+            messageForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
 
-            const form = this;
-            const btn = form.querySelector('button');
-            const originalContent = btn.innerHTML;
+                const form = this;
+                const btn = form.querySelector('button');
+                const originalContent = btn.innerHTML;
 
-            const messageText = form.querySelector('textarea[name="message"]').value;
-            if (messageText.length < 10) {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Pesan Terlalu Singkat',
-                    text: 'Tulis minimal 10 karakter ya, supaya Shofia lebih paham maksudmu.',
-                    confirmButtonColor: '#4f46e5'
-                });
-                return;
-            }
-
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-circle-notch animate-spin"></i> Mengirim...';
-
-            try {
-                const response = await fetch("{{ route('message.store') }}", {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        'Accept': 'application/json',
-                    },
-                    body: new FormData(form)
-                });
-
-                const data = await response.json();
-
-                if (data.success) {
+                const messageText = form.querySelector('textarea[name="message"]').value;
+                if (messageText.length < 10) {
                     Swal.fire({
-                        icon: 'success',
-                        title: 'Berhasil Terkirim!',
-                        text: data.message,
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: true,
+                        icon: 'warning',
+                        title: 'Pesan Terlalu Singkat',
+                        text: 'Tulis minimal 10 karakter ya, supaya Shofia lebih paham maksudmu.',
+                        confirmButtonColor: '#4f46e5'
+                    });
+                    return;
+                }
+
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fa-solid fa-circle-notch animate-spin"></i> Mengirim...';
+
+                try {
+                    const response = await fetch("{{ route('message.store') }}", {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Accept': 'application/json',
+                        },
+                        body: new FormData(form)
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil Terkirim!',
+                            text: data.message,
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            background: '#18181b',
+                            color: '#fff'
+                        });
+                        form.reset();
+                    } else {
+                        throw new Error(data.message || 'Terjadi kesalahan');
+                    }
+                } catch (error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal Mengirim',
+                        text: error.message || 'Cek koneksi internet atau coba lagi nanti.',
+                        confirmButtonColor: '#ef4444',
                         background: '#18181b',
                         color: '#fff'
                     });
-                    form.reset();
-                } else {
-                    throw new Error(data.message || 'Terjadi kesalahan');
+                } finally {
+                    btn.disabled = false;
+                    btn.innerHTML = originalContent;
                 }
-            } catch (error) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Gagal Mengirim',
-                    text: error.message || 'Cek koneksi internet atau coba lagi nanti.',
-                    confirmButtonColor: '#ef4444',
-                    background: '#18181b',
-                    color: '#fff'
-                });
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = originalContent;
-            }
-        });
+            });
+        }
     </script>
 @endsection
