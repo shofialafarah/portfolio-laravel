@@ -7,6 +7,7 @@ use App\Models\Profile;
 use App\Models\Headline;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller
 {
@@ -73,10 +74,22 @@ class ProfileController extends Controller
 
     public function headlineStore(Request $request)
     {
-        $request->validate(['text' => 'required|string|max:255']);
+        $request->validate([
+            'text' => [
+                'required',
+                'string',
+                'max:255',
+                // Cek ke unikan teks secara case-insensitive
+                Rule::unique('headlines', 'text')->where(function ($query) use ($request) {
+                    return $query->whereRaw('LOWER(text) = ?', [strtolower(trim($request->text))]);
+                }),
+            ],
+        ], [
+            'text.unique' => 'Headline ini sudah ada, silakan gunakan teks lain!',
+        ]);
 
         Headline::create([
-            'text' => $request->text,
+            'text' => trim($request->text),
             'is_active' => true,
             'order' => Headline::max('order') + 1,
         ]);
@@ -94,7 +107,19 @@ class ProfileController extends Controller
             return back();
         }
 
-        $request->validate(['text' => 'required|string|max:255']);
+        $request->validate([
+            'text' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('headlines', 'text')->ignore($headline->id)->where(function ($query) use ($request) {
+                    return $query->whereRaw('LOWER(text) = ?', [strtolower(trim($request->text))]);
+                }),
+            ],
+        ], [
+            'text.unique' => 'Headline ini sudah ada!',
+        ]);
+        
         $headline->update($request->only('text'));
         return back()->with('success', 'Headline diperbarui');
     }
